@@ -1,0 +1,59 @@
+  
+SET NAMES utf8;
+
+DROP DATABASE IF EXISTS Groupomania;
+
+CREATE DATABASE Groupomania CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'supAdmin' IDENTIFIED BY 'admin';
+GRANT ALL
+ON Groupomania.*
+TO 'supAdmin';
+
+USE Groupomania;
+
+-- Création de la table des utilisateurs
+CREATE TABLE User (
+	userID SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	email VARCHAR(60) NOT NULL UNIQUE,
+	firstName VARCHAR(30) NOT NULL,
+	lastName VARCHAR(30) NOT NULL,
+	pseudo VARCHAR(30),
+	password VARCHAR(100) NOT NULL UNIQUE,
+	bio VARCHAR(256),
+	avatarUrl VARCHAR(150) NOT NULL DEFAULT 'http://localhost:3000/images/avatarDefault.jpg',
+	dateCreation DATETIME NOT NULL,
+	PRIMARY KEY (userID)
+)
+ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Création de la table des posts
+CREATE TABLE Post (
+	postID MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+	userID SMALLINT UNSIGNED,
+	legend VARCHAR(180),
+	gifUrl VARCHAR(150),
+	postIDComment MEDIUMINT UNSIGNED,
+	body TEXT,
+	dateCreation DATETIME NOT NULL,
+	PRIMARY KEY (postID)
+)
+ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- Création de la table des réactions (like)
+CREATE TABLE Reaction (
+	userID SMALLINT UNSIGNED NOT NULL,
+	postID MEDIUMINT UNSIGNED NOT NULL,
+	reaction TINYINT,
+	dateCreation DATETIME NOT NULL,
+	PRIMARY KEY (userID, postID)
+)
+ENGINE=INNODB;
+
+-- Création des clés étrangères
+
+ALTER TABLE Post ADD CONSTRAINT fk_post_userID FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE Post ADD CONSTRAINT fk_commentID FOREIGN KEY (postIDComment) REFERENCES Post(postID) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE Reaction ADD CONSTRAINT fk_reaction_userID FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+ALTER TABLE Reaction fk_postID FOREIGN KEY (postID) REFERENCES Post(postID) ON DELETE CASCADE;
