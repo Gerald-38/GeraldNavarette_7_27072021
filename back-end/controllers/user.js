@@ -4,6 +4,7 @@ const connect = require('../dbConnect').connection; //Connexion à la bd
 const bcrypt = require('bcrypt'); // Pour crypter le mot de passe
 const jwt = require("jsonwebtoken"); 
 const fs = require("fs"); 
+require('dotenv').config()
 // FIN MODULES
 
 // MIDDLEWARE SIGNUP  - Inscription de l'utilisateur et hashage du mot de passe
@@ -13,15 +14,17 @@ exports.signup = (req, res, next) => {
         .then(hash => {
             const email = req.body.email;
             const firstName = req.body.firstName;
-            const lastName = req.body.lastName;
-            const userNick = req.body.userNick;
-            const password = hash;            
+            const lastName = req.body.lastName;            
+            const password = hash;
+            const pseudo = req.body.pseudo;
+            const bio = req.body.bio;
+            const avatarUrl = req.body.avatarUrl;            
 
             let sqlSignup;
             let values;
 
             sqlSignup = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, ?, NULL, avatarUrl, NOW())";
-            values = [email, firstName, lastName, userNick, password];
+            values = [email, firstName, lastName, password, pseudo];
             connect.query(sqlSignup, values, function (err, result) {
                 if (err) {
                     return res.status(500).json(err.message);
@@ -33,6 +36,43 @@ exports.signup = (req, res, next) => {
 };
 // FIN MIDDLEWARE
 
+//Inscription
+// exports.signup = (req, res, next) => {
+    //Cryptage Email
+    // const buffer = Buffer.from(req.body.email);
+    // const cryptedEmail = buffer.toString('base64');
+    //Verification email disponible
+    // connect.query(`SELECT * FROM user WHERE email='${cryptedEmail}'`,
+    //         (err, results, rows) => {
+                //Si email deja utilisé
+                // if (results.length > 0) {
+                //     res.status(401).json({
+                //         message: 'Email non disponible.'
+                //     });
+                //     //Si email disponible
+                // } else {
+                //Cryptage du MDP
+                // bcrypt.hash(req.body.password, 10)
+                // .then(cryptedPassword => {
+                    //Ajout à la BDD
+//                     connect.query(`INSERT INTO user VALUES (NULL, '${cryptedEmail}',  '${req.body.firstName}', '${req.body.lastName}', '${cryptedPassword}', '${req.body.pseudo}', '', '', NOW())`,
+//                         (err, results, fields) => {
+//                             if (err) {
+//                                 console.log(err);
+//                                 return res.status(400).json("erreur");
+//                             }
+//                             return res.status(201).json({
+//                                 message: 'Votre compte a bien été crée !'
+//                             });
+//                         }
+//                     );
+//                 })
+//                 .catch(error => res.status(500).json({
+//                     error
+//                 }));
+//             }
+//             });
+// };
 
 // MIDDLEWARE LOGIN avec vérification de l'email unique
 exports.login = (req, res, next) => {
@@ -56,9 +96,10 @@ exports.login = (req, res, next) => {
                     return res.status(401).json({ error: "Mot de passe incorrect !" });
                 }
                 res.status(200).json({
+                    userID: result[0].userID,                                                     
                     token: jwt.sign(
                         { userID: result[0].userID },
-                        "RANDOM_TOKEN_SECRET", // TODO : A placer dans .env
+                        process.env.DB_TOKEN, // TODO : A placer dans .env
                         { expiresIn: "24h" }
                     )
                 });
@@ -71,7 +112,6 @@ exports.login = (req, res, next) => {
 // MIDDLEWARE DELETE pour supprimer un utilisateur
 exports.delete = (req, res, next) => {
     const password = req.body.password;
-    let passwordHashed;
     const userID = res.locals.userID;
 
     let sqlFindUser;
@@ -115,17 +155,10 @@ exports.delete = (req, res, next) => {
 // MIDDLEWARE PROFILE
 exports.profile = (req, res, next) => {
     const userID = res.locals.userID;
-    let userIDAsked = req.params.id;
 
-    let sqlGetUser;
-
-    if (userIDAsked === "yourProfile") {
-        userIDAsked = userID;
-    }
-
-    sqlGetUser = `SELECT email, firstName, lastName, pseudo, bio, avatarUrl, DATE_FORMAT(dateCreation, 'Inscrit depuis le %e %M %Y à %kh%i') AS dateCreation,
-    COUNT(CASE WHEN userID = ? then 1 else null end) AS yourProfile FROM User WHERE userID = ?`;
-    connect.query(sqlGetUser, [userID, userIDAsked], function (err, result) {
+    let sqlGetUser = `SELECT email, firstName, lastName, pseudo, bio, avatarUrl, DATE_FORMAT(dateCreation, 'Inscrit depuis le %e %M %Y à %kh%i') AS dateCreation
+    FROM user WHERE userID = ?`;
+    connect.query(sqlGetUser, [userID], function (err, result) {
         if (err) {
             return res.status(500).json(err.message);
         }

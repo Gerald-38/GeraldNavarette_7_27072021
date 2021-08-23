@@ -16,10 +16,13 @@ const multer = require("../middleware/multer-config"); // Permet d'envoyer un fi
 // ROUTES - Création des différentes ROUTES de l'API en leurs précisant, dans l'ordre, leurs middlewares et controllers
 router.get("/", auth, postCtrl.getAllPosts);
 router.get("/:id", auth, postCtrl.getOnePost);
-router.post("/", auth, multer, postCtrl.createPost);
+router.post("/", auth, postCtrl.createPost);  // TODO : ADD MULTER
+router.put('/:id', auth, postCtrl.modifyOnePost);
 router.delete("/:id", auth, postCtrl.deletePost);
 router.post("/:id/comment", auth, postCtrl.createComment);
-router.post("/:id/reaction", auth, postCtrl.reactPost);
+router.get("/:id/comment", auth, postCtrl.getAllComments);
+router.delete('/:id/comment/:id', auth, postCtrl.deleteComment);
+// router.post("/:id/reaction", auth, postCtrl.reactPost);
 // FIN ROUTES
 
 
