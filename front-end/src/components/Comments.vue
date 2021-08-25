@@ -3,17 +3,16 @@
       
         <form @submit.prevent= newComment()>
             <label for="new-comment">Laisser un commentaire :</label>
-            <textarea name="newComment" id="new-comment" placeholder="Laisser un commentaire..." required></textarea>
+            <textarea name="newComment" id="new-comment" placeholder="Laisser un commentaire..."></textarea>
             <button type="submit" id="send-comment">Envoyer</button>
         </form>
 
         <h2 v-if="comments.length > 0">Commentaires :</h2>
 
         <div class="comments">
-            <div class="comment" v-for="comment in comments" :key="comment.id">
-            <div class="comment-info">Par {{comment.prenom}} {{comment.nom}} le {{dateFormat(comment.date)}} 
-                <span @click="deleteComment(comment.commentID)" v-if="comment.userId == $user.userId || $user.admin == 1" :key="comment.id">Supprimer</span>
-            <div> {{comment.commentID}} </div>
+            <div class="comment" v-for="comment in comments" :key="comment.commentID">
+            <div class="comment-info">Par {{comment.firstName}} {{comment.lastName}} le {{dateFormat(comment.date)}} 
+                <span @click="deleteComment(comment.commentID)" v-if="comment.userID == $user.userID || $user.admin == 1" :key="comment.commentID">Supprimer</span> 
             </div>
             {{comment.content}}
             </div>

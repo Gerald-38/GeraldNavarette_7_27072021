@@ -10,7 +10,7 @@
         </div>
         <div class="delete-profile" @click="deleteUser()">Supprimer le compte</div>
 
-        <h3>Vos posts :</h3>
+        <!-- <h3>Vos posts :</h3> -->
     </div>
 </template>
 

@@ -7,7 +7,7 @@
                     <span class="post-modify" v-if="post.userID == $user.userID">Modifier</span> 
                 </div>  
                 <h2 class="post-title">{{post.title}}</h2>
-                <h2 class="post-title">{{post.postID}}</h2>
+                <!-- <h2 class="post-title">{{post.postID}}</h2> -->
                 <div class="post-content" v-html="characterLimit(post.content)"></div>
                 <!-- <div class="post-content"> {{post.gifUrl}} </div> -->
             </router-link>
@@ -71,7 +71,7 @@ export default {
     .posts{
         margin: 0 auto;
         padding: 20px;
-        max-width: 800px;
+        max-width: 800px;        
     }
     .post{
         position: relative;

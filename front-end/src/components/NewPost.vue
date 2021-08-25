@@ -1,56 +1,41 @@
 <!-- COMPONENT CREATEPOST - Composants de la création d'un post -->
 
 <template>
-        <!-- <div class="post-wrapper" v-if="!modify">
-            <h2 class="post-title">{{this.post.title}}</h2>
-            <div class="post-content" v-html="this.post.content"></div>
-            <img src="this.post.gifUrl" alt="">            
-            <div class="post-content" v-html="this.post.gifUrl"></div>
-            
-        </div> -->
   <div class="post-wrapper">
     <form name="createPost">
+      
       <!-- Textarea du post -->
-      <input type="text" placeholder="entrez le titre" id="newpost-title">
+      <input 
+      type="text" 
+      placeholder="entrez le titre" 
+      id="newpost-title" 
+      required>
+      <br>
+      <span id='missTitle'></span>
       <br>
       <textarea
+        type = "text"
         name="message"
         class=""
         cols="130"
         rows="3"
         maxlength="180"
-        required
+        required 
         placeholder="entrez le contenu"
         v-model="content"
         id="newpost-content"
       ></textarea>
+      <br>
+      <span id='missContent'></span>
       <!-- Fin -->
+
       <!-- Sélection du Gif -->
-      <div class="">
-        <input
-          name="image"
-          type="file"
-          class=""
-          required          
-          id="newpost-image"
-        />
-        <label class="" for="image">Choisir un fichier multimédia</label>
+      <div id='main'>
+        <input type="file" name="image" id="newpost-image" required> 
       </div>
-      
-      <!-- <div class="custom-file">
-        <input
-          name="inputFile"
-          type="file"
-          class="custom-file-input"
-          id="newpost-image"
-          @change="onFileChange"
-        />
-        <label class="custom-file-label" for="inputFile">Choose file</label>
-      </div> -->
-
-
-
-      <!-- Fin -->
+      <span id='missImage'></span>
+      <br>
+ 
       <!-- Bouton pour le publier -->
       <button
         class=""
@@ -58,6 +43,7 @@
         v-on:click.prevent="addPost()"
       >Publier</button>
       <!-- Fin -->
+
     </form>
   </div>
 </template>
@@ -69,61 +55,83 @@ export default {
   name: "CreatePost",
   data: () => {
     return {
+        // alt_text,
         title: "",
         content: "", 
-        gifUrl: null, 
+        // gifUrl: null, 
+        image: "",
     };
   },
   methods: {
-
-    onFileChange(e) {
-      console.log(e);
-      // this.imageFile = e.target.files[0]      
-    },
-    // onFileChange(e) {
-    //   console.log(e);
-    //   const imageFile = e.target.files[0]
-    //   const reader = new FileReader();
-    //   reader.readAsDataURL(imageFile);      
-    //   reader.onload = e =>{
-    //       this.imageFile = e.target.result;
-    //       console.log(this.imageFile);
-    //   };
-    //   console.log(this.imageFile);
-    // },
     addPost(){
-      const userID = this.$user.userID;      
-      const title = document.getElementById("newpost-title").value;
-      const content = document.getElementById("newpost-content").value;  
-      console.log(userID);          
-      const gifUrl = document.getElementById("newpost-image").value;
-      // const gifUrl = this.imageFile;
-      // console.log(gifUrl);
+
+      // VALIDATION DE LA SAISIE
       
-      axios.post(`${this.$apiUrl}/posts`,
-          {
-              userID,
-              title,
-              content,
-              gifUrl
-          },
+      const titleValid = document.getElementById('newpost-title').checkValidity();
+      const contentValid = document.getElementById('newpost-content').checkValidity();
+      const imageValid = document.getElementById('newpost-image').checkValidity();       
+      const missTitle = document.getElementById('missTitle');
+      const missContent = document.getElementById('missContent');
+      const missImage = document.getElementById('missImage');
+
+      if (!titleValid){
+        missTitle.textContent = 'Titre manquant';
+        missTitle.style.color = 'red' ;      
+      } else{ 
+        missTitle.textContent = " ";
+      }
+
+      if (!contentValid){
+        missContent.textContent = 'Contenu manquant';
+        missContent.style.color = 'red' ;      
+      } else{ 
+        missContent.textContent = " ";
+      }
+
+      if (!imageValid){
+        missImage.textContent = 'Image manquante';
+        missImage.style.color = 'red' ;      
+      } else{ 
+        missImage.textContent = " ";
+      }
+      // FIN VALIDATION 
+
+      const userID = this.$user.userID;            
+      const title = document.getElementById("newpost-title").value;
+      const content = document.getElementById("newpost-content").value; 
+      let image = document.getElementById('newpost-image').files[0] 
+      var formData = new FormData()
+      
+      formData.append('userID', userID)
+      formData.append('title', title)
+      formData.append('image', image)
+      formData.append('content', content) 
+
+
+      if (titleValid && contentValid && imageValid) {
+        axios.post(`${this.$apiUrl}/posts`, 
+          formData,
           {
               headers: {
                   'Content-Type': 'application/json',
                   'Authorization': `Bearer ${this.$token}`
               }
           }
-      )
-      .then(res => {
-          if(res.status === 201) {
-                location.href = '/';
-          }
-      })
-      .catch((error) => {
-          if (error.response.status === 401) {
-              this.message = "Email non disponible.";
-          }  
-      });            
+          )
+          .then(res => {
+              if(res.status === 201) {
+                    location.href = '/';
+              }
+          })
+          .catch((error) => {
+              if (error.response.status === 401) {
+                  this.message = "Email non disponible.";
+              }  
+        });         
+      }
+      else {
+        alert('saisie incomplete');
+      }                   
     }    
   },
 };

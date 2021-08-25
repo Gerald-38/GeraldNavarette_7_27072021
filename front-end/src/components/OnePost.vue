@@ -2,19 +2,19 @@
     <div class="onePost">
         <div class="post-wrapper" v-if="!modify">
             <h2 class="post-title">{{this.post.title}}</h2>
-            <div class="post-content" v-html="this.post.content"></div>
-            <img src="this.post.gifUrl" alt="">            
-            <div class="post-content" v-html="this.post.gifUrl"></div>
-            
+            <div class="post-content" v-html="this.post.content"></div>            
+            <img :src="this.post.gifUrl" alt="" class="post-image" id="posted-image">            
         </div>
 
         <div class="modify-wrapper" v-if="modify">
             <label for="modify-title">Modifier le titre :</label>
-            <!-- <input type="text" id="modify-title" v-model="this.post.title"> -->
-            <input type="text" id="modify-title" v-model="this.post.title">
-            <label for="modify-content">Modifier le contenu :</label>
-            <textarea id="modify-content" v-model="this.post.content"></textarea>
+            <input type="text" id="modify-title" :value=this.post.title>            
+            <label for="modify-content">Modifier le contenu :</label>            
+            <textarea id="modify-content" :value=this.post.content></textarea>  
+            <input type="file" name="image" id="modify-image">
+            <img :src="this.post.gifUrl" alt="" id="current-image">       
         </div>
+        
 
         <button v-if="authorized && !modify" @click="modify = true">Modifier</button>
         <button v-if="modify" @click="modify = false">Annuler</button>
@@ -35,7 +35,10 @@ export default {
             modifiedContent: '',
             post: [],
             authorized: false,
-            modify: false,            
+            modify: false, 
+            title: "",
+            image: "",     
+            content: "",    
         }
     },
     mounted(){
@@ -64,9 +67,9 @@ export default {
             })            
         },
         deleteOnePost(){
-            const postId = this.$route.params.id;
+            const postID = this.$route.params.id;
             
-            axios.delete(`${this.$apiUrl}/posts/${postId}`,
+            axios.delete(`${this.$apiUrl}/posts/${postID}`,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -80,21 +83,52 @@ export default {
             const postId = this.$route.params.id;
             const title = document.querySelector('#modify-title').value;
             const content = document.querySelector('#modify-content').value;
-            
-            axios.put(`${this.$apiUrl}/posts/${postId}`,
-                {
-                    postId,
-                    title,
-                    content
-                },
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${this.$token}`
+            let image = document.getElementById('modify-image').files[0] 
+            // if (!image) {
+            //     image = this.post.gifUrl;
+            // }
+
+            console.log(image);
+            if(image) { // si positive, c'est qu'il y a
+                var formData = new FormData()      
+                formData.append('postID', postId)
+                formData.append('title', title)
+                formData.append('image', image)
+                formData.append('content', content) 
+                
+                axios.put(`${this.$apiUrl}/posts/${postId}`, 
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                            'Authorization': `Bearer ${this.$token}`
+                        }
                     }
-                }
-            )
-            .then(location.href = "/");
+                )
+                .then(location.href = "/");
+            } else {
+                // image n'a pas été modifièe
+                // donc on prépare une requete JSON
+                let postData = {
+                    title: title,
+                    content: content,
+                    postId: postId
+                };
+                    axios.put(`${this.$apiUrl}/posts/${postId}`, 
+                    postData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${this.$token}`
+                        }
+                    }
+            
+                )
+                .then(location.href = "/");
+            }           
+
+           
+            // .then(location.href = "/");
         }
     }
 }
@@ -118,6 +152,14 @@ export default {
     .post-content{
         margin-top: 20px;
     }
+
+    .post-image {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+
+
     /* Modify style */
     .modify-wrapper{
         display: flex;
@@ -142,6 +184,11 @@ export default {
         padding: 10px;
         resize: none;
         overflow-y: scroll;
+    }
+
+    #current-image {
+        height: 20%;
+        width: 20%;
     }
     .onePost button{
         margin-top: 20px;
