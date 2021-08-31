@@ -5,7 +5,6 @@ const userRoutes = require("./routes/user");
 const session = require('cookie-session');
 const nocache = require('nocache');
 const path = require('path');
-// require('dotenv').config()
 "use strict"
 
 // utilisation du module 'helmet' pour la sécurité en protégeant l'application de certaines vulnérabilités
@@ -43,8 +42,6 @@ app.use(nocache());
 app.use(express.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use('/api/sauces', sauceRoutes);
-// app.use('/api/auth', userRoutes);
 
 app.use("/api/user", userRoutes);
 app.use("/api/posts", postRoutes);

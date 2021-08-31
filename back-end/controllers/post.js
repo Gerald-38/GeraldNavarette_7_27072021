@@ -1,9 +1,8 @@
-// const mysql = require('mysql');
 const connect = require('../dbConnect').connection;
 const fs = require("fs");
 
 
-// MIDDLEWARE GETALLPOSTS pour obtenir tous les messages
+// GETALLPOSTS pour obtenir tous les messages
 
     exports.getAllPosts = (req, res, next) => {
         let postsQuery = 'SELECT user.firstName, user.lastName, post.postID, post.userID, post.title, post.dateCreation AS date, post.content FROM user INNER JOIN post ON user.userID = post.userID ORDER BY date DESC'
@@ -17,9 +16,9 @@ const fs = require("fs");
         });
     };
 
-// FIN MIDDLEWARE
+// 
 
-// MIDDLEWARE GETONEPOST pour obtenir un message
+// GETONEPOST pour obtenir un message
 
 exports.getOnePost = (req, res, next) => {
     const postId = req.params.id;
@@ -33,9 +32,9 @@ exports.getOnePost = (req, res, next) => {
         return res.status(200).json(result);
     });
 };
-// FIN MIDDLEWARE
+// 
 
-// MIDDLEWARE CREATEPOST pour céer les messages
+// CREATEPOST pour céer les messages
 
 exports.createPost = (req, res, next) => {
     const userID = req.body.userID;
@@ -55,13 +54,12 @@ exports.createPost = (req, res, next) => {
     });
 };
 
-// FIN MIDDLEWARE
+// 
 
-// MIDDLEWARE DELETEPOST pour supprimer les messages
+// DELETEPOST pour supprimer les messages
 exports.deletePost = (req, res, next) => {
     let postID = req.params.id;
-    let userID = res.locals.userID;     
-    // let gifUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;    
+    let userID = res.locals.userID;
 
     let sqlDeletePost;
     let sqlSelectPost;
@@ -95,14 +93,15 @@ exports.deletePost = (req, res, next) => {
     });
 };
 
-// MIDDLEWARE MODIFYONEPOST pour editer un post
+// 
+
+// MODIFYONEPOST pour editer un post
 exports.modifyOnePost = (req, res, next) => {
     let postID = req.params.id;
     let title = req.body.title;
      
     let content = req.body.content;
-
-    // quand es ce que ont envoi la requete json et quand cest la formdata
+   
     if(req.file) {
         let gifUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
         sqlSelectPost = "SELECT gifUrl FROM Post WHERE postID = ?";
@@ -137,7 +136,6 @@ exports.modifyOnePost = (req, res, next) => {
     
         });
     } else {
-        // Ici ont recoit une requete JSON
         let sqlModifyPost = "UPDATE post SET title = ?, content = ? WHERE postID = ?";
         connect.query(sqlModifyPost, [title, content, postID], function (error, result, field) {
             if (error) {
@@ -147,22 +145,12 @@ exports.modifyOnePost = (req, res, next) => {
             }
             return res.status(200).json(result);
         });
-    }
-
-   
-    
-    
-
-//    let sqlModifyPost = "UPDATE post SET title = ?, gifUrl = ?, content = ? WHERE postID = ?";
-//     connect.query(sqlModifyPost, [title, gifUrl, content, postID], function (error, result, field) {
-//         if (error) {
-//             return res.status(400).json({
-//                 error
-//             });
-//         }
-//         return res.status(200).json(result);
-//     });
+    } 
 };
+
+// 
+
+//  CREATE COMMENT POUR AJOUTER UN COMMENTAIRE
 
 exports.createComment = (req, res, next) => {
     const userID = req.body.userID;
@@ -180,20 +168,10 @@ exports.createComment = (req, res, next) => {
     });
 };
 
+// 
 
-// New comment
-// exports.createComment = (req, res, next) => {
-//     connect.query(`INSERT INTO comments VALUES (NULL, ${req.body.userID}, ${req.body.postID}, NOW(), '${req.body.content}')`, (error, result, field) => {
-//         if (error) {
-//             return res.status(400).json({
-//                 error
-//             });
-//         }
-//         return res.status(200).json(result);
-//     });
-// };
 
-// Get all comments
+// GET ALL COMMENTS POUR AFFICHER LA LISTE DES COMMENTAIRES
 exports.getAllComments = (req, res, next) => {
     connect.query(`SELECT user.userID, user.firstName, user.lastName, user.admin, comments.commentID,comments.content, comments.userID, comments.date FROM user INNER JOIN comments ON user.userID = comments.userID WHERE comments.postID = ${req.params.id} ORDER BY comments.date DESC`,
         (error, result, field) => {
@@ -207,7 +185,7 @@ exports.getAllComments = (req, res, next) => {
         });
 };
 
-//Delete comment
+// DELETE COMMENT POUR SUPPRIMER UN COMMENTAIRE
 exports.deleteComment = (req, res, next) => {
     connect.query(`DELETE FROM comments WHERE commentID = ${req.params.id}`, (error, result, field) => {
     // let sqlDeleteComment;
@@ -222,5 +200,5 @@ exports.deleteComment = (req, res, next) => {
     });
 }
 
-// FIN MIDDLEWARE
+//  
 

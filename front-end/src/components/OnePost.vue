@@ -172,7 +172,7 @@ export default {
         margin: 0;
         margin-bottom: 20px;
         color: rgb(0,0,0);
-        font-size: 2rem;
+        font-size: 1rem;
     }
     #modify-content{
         margin-top: 20px;

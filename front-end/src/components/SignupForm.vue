@@ -73,7 +73,7 @@ export default {
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
-                        this.message = "Email non disponible.";
+                        this.message = "Email déjà utilisé.";
                     }  
                 });
             }

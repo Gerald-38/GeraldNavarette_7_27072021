@@ -1,46 +1,18 @@
-// MODULES
 const connect = require('../dbConnect').connection; //Connexion à la bd
 const bcrypt = require('bcrypt'); // Pour crypter le mot de passe
 const jwt = require("jsonwebtoken"); 
 const fs = require("fs"); 
 require('dotenv').config()
-// FIN MODULES
 
-// MIDDLEWARE SIGNUP  - Inscription de l'utilisateur et hashage du mot de passe
-// exports.signup = (req, res, next) => {
-//     bcrypt.hash(req.body.password, 10)
-//         .then(hash => {
-//             const email = req.body.email;
-//             const firstName = req.body.firstName;
-//             const lastName = req.body.lastName;            
-//             const password = hash;
-//             const pseudo = req.body.pseudo;
-//             const bio = req.body.bio;
-//             const avatarUrl = req.body.avatarUrl;            
 
-//             let sqlSignup;
-//             let values;
 
-//             sqlSignup = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, ?, 0, NULL, avatarUrl, NOW())";
-//             values = [email, firstName, lastName, password, pseudo];
-//             connect.query(sqlSignup, values, function (err, result) {
-//                 if (err) {
-//                     return res.status(500).json(err.message);
-//                 }
-//                 res.status(201).json({ message: "Utilisateur créé !" });
-//             });
-//         })
-//         .catch(e => res.status(500).json(e));
-// };
-// FIN MIDDLEWARE
-
-//Inscription
+//SIGNUP POUR CREER UN COMPTE UTILISATEUR
 exports.signup = (req, res, next) => {    
     connect.query(`SELECT * FROM user WHERE email = "${req.body.email}"`, (err, result, rows) => {              
         // Si email deja utilisé
         if (result.length > 0) {
             res.status(401).json({
-                message: 'Email non disponible.'
+                message: 'Email déjà utilisé.'
             });            
         } //Si email disponible
         else {
@@ -70,47 +42,9 @@ exports.signup = (req, res, next) => {
     });
 };
 
-// exports.login = (req, res, next) => {
-//     // const buffer = Buffer.from(req.body.email);
-//     // const cryptedEmail = buffer.toString('base64');
-//     //Recherche de l'utilisateur dans la BDD
-//     connect.query(`SELECT * FROM user WHERE email='req.body.email'`,
-//         (err, results, rows) => {
-//             //Si utilisateur trouvé : 
-//             if (results.length > 0) {
-//                 //Verification du MDP
-//                 bcrypt.compare(req.body.password, results[0].password)
-//                     .then(valid => {
-//                         //Si MDP invalide erreur
-//                         if (!valid) {
-//                             res.status(401).json({
-//                                 message: 'Mot de passe incorrect.'
-//                             });
-//                             //Si MDP valide création d'un token
-//                         } else {
-//                             res.status(200).json({
-//                                 userID: results[0].userID,
-//                                 firstName: results[0].firstName,
-//                                 lastName: results[0].lastName,
-//                                 admin: results[0].admin,
-//                                 token: jwt.sign(
-//                                     { userID: results[0].userID },
-//                                     process.env.DB_TOKEN,
-//                                     { expiresIn: "24h" }
-//                                 )
-//                             });
-//                         }
-//                     });
-//             } else {
-//                 res.status(404).json({
-//                     message: 'Utilisateur inconnu.'
-//                 });
-//             }
-//         }
-//     );
-// };
 
-// MIDDLEWARE LOGIN avec vérification de l'email unique
+
+// LOGIN POUR CONNECTER UN UTILISATEUR
 exports.login = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -146,9 +80,9 @@ exports.login = (req, res, next) => {
             .catch(e => res.status(500).json(e));
     });
 };
-// FIN MIDDLEWARE
+//  
 
-// MIDDLEWARE DELETE pour supprimer un utilisateur
+//  DELETE POUR SUPPRIMER UN UTILISATEUR
 exports.delete = (req, res, next) => {
     const password = req.body.password;
     const userID = res.locals.userID;
@@ -190,9 +124,9 @@ exports.delete = (req, res, next) => {
         
 
 };
-// FIN MIDDLEWARE
+// 
 
-// MIDDLEWARE PROFILE
+// PROFILE POUR AFFICHER UN PROFIL UTILISATEUR
 exports.profile = (req, res, next) => {
     const userID = res.locals.userID;
 
@@ -208,10 +142,10 @@ exports.profile = (req, res, next) => {
         res.status(200).json(result);
     });
 };
-// FIN MIDDLEWARE
+//  
 
+// MODIFY POUR MODIFIER DES ELEMENTS DU PROFIL
 exports.modify = (req, res, next) => {
-    // const userID = res.locals.userID;  
     const userID = req.params.id;   
     const email = req.body.email;
     const password = req.body.newPassword;
@@ -250,154 +184,4 @@ exports.modify = (req, res, next) => {
     }  
 }
 
-
-// exports.modify = (req, res, next) => {
-//     const userID = res.locals.userID;
-//     const email = req.body.email;
-//     let firstName = req.body.firstName;
-//     let lastName = req.body.lastName;
-//     const pseudo = req.body.pseudo;
-
-//     sqlModifyUser = "UPDATE User SET email=?, firstName = ?, lastName = ?, pseudo=? WHERE userID = ?";
-//     values = [email, firstName, lastName, pseudo, userID];
-//     connect.query(sqlModifyUser, values, function (err, result) {
-//         if (err) {
-//             return res.status(500).json(err.message);
-//         }
-//         if (result.affectedRows == 0) {
-//             return res.status(400).json({ message: "Changement échoué !" });
-//         }
-//         res.status(200).json({ message: "Changement réussi !" });
-//     });
-// }
-
-
-
-//                         sqlModifyUser = "UPDATE User SET email=?, pseudo=?, bio=? WHERE userID = ?";
-//                         values = [email, pseudo, bio, userID];
-//                         connect.query(sqlModifyUser, values, function (err, result) {
-//                             if (err) {
-//                                 return res.status(500).json(err.message);
-//                             }
-//                             if (result.affectedRows == 0) {
-//                                 return res.status(400).json({ message: "Changement échoué !" });
-//                             }
-//                             res.status(200).json({ message: "Changement réussi !" });
-//                         });
-
-
-
-// MIDDLEWARE MODIFY
-// exports.modify = (req, res, next) => {
-//     const userID = res.locals.userID;
-//     const email = req.body.email;
-//     const pseudo = req.body.pseudo;
-//     const bio = req.body.bio;
-//     const password = req.body.password;
-
-//     let sqlFindUser;
-//     let sqlModifyUser;
-//     let sqlChangePassword;
-//     let values;
-
-//     if (req.file) { // Si le changement concerne l'avatar on update directement
-        // const avatarUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
-
-        // sqlFindUser = "SELECT avatarUrl FROM User WHERE userID = ?";
-        // connect.query(sqlFindUser, [userID], function (err, result) {
-        //     if (err) {
-        //         return res.status(500).json(err.message);
-        //     }
-
-        //     const filename = result[0].avatarUrl.split("/images/")[1];
-        //     sqlModifyUser = "UPDATE User SET avatarUrl = ? WHERE userID = ?";
-        //     if (filename !== "avatarDefault.jpg") {
-        //         fs.unlink(`images/${filename}`, () => { // On supprime le fichier image en amont
-    //                 connect.query(sqlModifyUser, [avatarUrl, userID], function (err, result) {
-    //                     if (err) {
-    //                         return res.status(500).json(err.message);
-    //                     }
-    //                     return res.status(200).json({ message: "Utilisateur modifé !" });
-    //                 });
-    //             });
-    //         } else {
-    //             connect.query(sqlModifyUser, [avatarUrl, userID], function (err, result) {
-    //                 if (err) {
-    //                     return res.status(500).json(err.message);
-    //                 }
-    //                 return res.status(200).json({ message: "Utilisateur modifé !" });
-    //             });
-    //         }
-    //     });
-
-    // } else { // Si le changement concerne les infos de l'user on demande le mdp
-        // sqlFindUser = "SELECT password FROM User WHERE userID = ?";
-        // connect.query(sqlFindUser, [userID], function (err, result) {
-        //     if (err) {
-        //         return res.status(500).json(err.message);
-        //     }
-        //     if (result.length == 0) {
-        //         return res.status(401).json({ error: "Utilisateur non trouvé !" });
-        //     }
-
-        //     const newPassword = req.body.newPassword;
-        //     const passwordHashed = result[0].password;
-        //     bcrypt.compare(password, passwordHashed)
-        //         .then(valid => {
-        //             if (!valid) {
-        //                 return res.status(401).json({ error: "Mot de passe incorrect !" });
-        //             }
-
-        //             if (newPassword) { // Si un nouveau mdp est défini
-                    //     bcrypt.hash(newPassword, 10)
-                    //         .then(hash => {
-                    //             sqlChangePassword = "UPDATE User SET email=?, pseudo=?, bio=?, password=? WHERE userID = ?";
-                    //             values = [email, pseudo, bio, hash, userID];
-                    //             connect.query(sqlChangePassword, values, function (err, result) {
-                    //                 if (err) {
-                    //                     return res.status(500).json(err.message);
-                    //                 }
-                    //                 if (result.affectedRows == 0) {
-                    //                     return res.status(400).json({ message: "Changement échoué !" });
-                    //                 }
-                    //                 res.status(200).json({ message: "Changement réussi !" });
-                    //             });
-                    //         })
-                    //         .catch(e => res.status(500).json(e));
-
-                    // } else { // Si le mdp reste le même
-//                         sqlModifyUser = "UPDATE User SET email=?, pseudo=?, bio=? WHERE userID = ?";
-//                         values = [email, pseudo, bio, userID];
-//                         connect.query(sqlModifyUser, values, function (err, result) {
-//                             if (err) {
-//                                 return res.status(500).json(err.message);
-//                             }
-//                             if (result.affectedRows == 0) {
-//                                 return res.status(400).json({ message: "Changement échoué !" });
-//                             }
-//                             res.status(200).json({ message: "Changement réussi !" });
-//                         });
-//                     }
-//                 })
-//                 .catch(e => res.status(500).json(e));
-//         });
-//     }
-// };
-
-// exports.role = (req, res, next) => {
-//     const userID = res.locals.userID;
-
-//     sqlFindUser = "SELECT role FROM User WHERE userID = ?";
-//     connect.query(sqlFindUser, [userID], function (err, result) {
-//         if (err) {
-//             return res.status(500).json(err.message);
-//         }
-//         if (result.length == 0) {
-//             return res.status(401).json({ error: "Utilisateur non trouvé !" });
-//         }
-//         return res.status(200).json(result);
-//     });
-// };
-
-// FIN MIDDLEWARE
 
