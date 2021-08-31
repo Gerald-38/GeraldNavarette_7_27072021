@@ -40,6 +40,8 @@ CREATE TABLE `users` (
   `firstName` varchar(40) NOT NULL,
   `lastName` varchar(40) NOT NULL,
   `password` varchar(80) NOT NULL,
+  `pseudo` varchar(30),
+  `admin` tinyint(1) NOT NULL DEFAULT 0  
   `bio` varchar(255),
   `avatarUrl` varchar (150) NOT NULL DEFAULT 'http://localhost:3000/images/avatarDefault.jpg',
   `dateCreation` DATETIME NOT NULL  

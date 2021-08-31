@@ -1,14 +1,17 @@
 <template>
     <div class="header">
-        <router-link to='/'>
+        <router-link style="text-decoration: none; color: inherit;" to='/'>
         <h1>
-            <img src="../assets/img/groupomania-logo-header.png" alt="Groupomania logo">
+            <img src="../assets/img/icon-left-font-monochrome-black.png" alt="Groupomania logo">
         </h1>
         </router-link>
 
         <nav>
-            <router-link to='/profile'>
-                <div>Mon compte</div>
+            <router-link to='/' style="text-decoration: none; color: inherit;">
+                <div>Liste des posts</div>
+            </router-link>
+            <router-link to='/profile' style="text-decoration: none; color: inherit;">
+                <div>Mon profil</div>
             </router-link>
             <div id="disconnect-btn" @click = disconnect()>Se déconnecter</div>
         </nav>
@@ -29,6 +32,13 @@ export default {
 </script>
 
 <style scoped>
+
+    p link {
+        text-decoration: none;
+    }
+    #popo {
+        text-decoration: none;
+    }
     .header{
         display: flex;
         justify-content: space-between;
@@ -52,7 +62,9 @@ export default {
         font-size: 1.5rem;
     }
     nav div:hover{
-        color: rgb(117, 117, 117);
+        /* color: rgb(117, 117, 117); */
+        color: red;
+        border-bottom: 3px solid rgb(43, 42, 42);
     }
     @media (max-width: 670px) {
         .header{

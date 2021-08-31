@@ -1,15 +1,13 @@
 <template>
-    <div class="posts">
+    <div class="posts">        
         <article class="post" v-for = "post in posts" :key="post.postID">
-            <router-link :to="{ name: 'Post', params: { id: post.postID } }">            
+            <router-link  style="text-decoration: none; color: inherit;" :to="{ name: 'Post', params: { id: post.postID } }">            
                 <div class="post-header">
                     <span class="post-info">Posté le {{dateFormat(post.date)}} par {{post.firstName}} {{post.lastName}}</span>
-                    <span class="post-modify" v-if="post.userID == $user.userID">Modifier</span> 
+                    <span class="post-modify" v-if="post.userID == $user.userID || $user.admin == 1">Modifier</span> 
                 </div>  
                 <h2 class="post-title">{{post.title}}</h2>
-                <!-- <h2 class="post-title">{{post.postID}}</h2> -->
                 <div class="post-content" v-html="characterLimit(post.content)"></div>
-                <!-- <div class="post-content"> {{post.gifUrl}} </div> -->
             </router-link>
         </article>
     </div>
@@ -50,7 +48,7 @@ export default {
         },
         characterLimit(content){
             let text = content;
-            const maxLength = 350;
+            const maxLength = 100;
             if(text.length > maxLength){
                 return text.substring(0, maxLength - 3) + "...";
             }
@@ -71,19 +69,23 @@ export default {
     .posts{
         margin: 0 auto;
         padding: 20px;
-        max-width: 800px;        
+        max-width: 800px;                
     }
+
     .post{
         position: relative;
         padding: 20px 20px 20px 30px;
         margin-bottom: 30px;
-        border-left: 5px solid red;
+        border-left: 5px solid rgb(43, 42, 42);
         box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
         text-align: left;
         transition-duration: .1s;
+        transition: 800ms;
     }
     .post:hover{
-        box-shadow: 0px 0px 50px -7px rgba(0, 0, 0, 0.2);
+        /* box-shadow: 0px 0px 50px -7px rgba(0, 0, 0, 0.2); */
+        cursor: pointer;
+        transform: scale(1.05);   
     }
     .post h2{
         margin-top: 7px;
@@ -100,7 +102,7 @@ export default {
         font-weight: bold;
     }
     .post-title{
-        color: red;
+        color: rgb(0, 0, 0); 
     }
     .post-content{
         font-size: .9rem;

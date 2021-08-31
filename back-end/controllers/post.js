@@ -164,11 +164,13 @@ exports.modifyOnePost = (req, res, next) => {
 //     });
 };
 
-
-
-// New comment
 exports.createComment = (req, res, next) => {
-    connect.query(`INSERT INTO comments VALUES (NULL, ${req.body.userID}, ${req.body.postID}, NOW(), '${req.body.content}')`, (error, result, field) => {
+    const userID = req.body.userID;
+    const postID = req.body.postID;
+    const content = req.body.content;
+    const createCommentQuery = `INSERT INTO comments VALUES (NULL, ?, ?, NOW(), ?)`
+    
+    connect.query(createCommentQuery, [userID, postID, content], function (error, result) {
         if (error) {
             return res.status(400).json({
                 error
@@ -178,15 +180,29 @@ exports.createComment = (req, res, next) => {
     });
 };
 
+
+// New comment
+// exports.createComment = (req, res, next) => {
+//     connect.query(`INSERT INTO comments VALUES (NULL, ${req.body.userID}, ${req.body.postID}, NOW(), '${req.body.content}')`, (error, result, field) => {
+//         if (error) {
+//             return res.status(400).json({
+//                 error
+//             });
+//         }
+//         return res.status(200).json(result);
+//     });
+// };
+
 // Get all comments
 exports.getAllComments = (req, res, next) => {
-    connect.query(`SELECT user.userID, user.firstName, user.lastName, comments.commentID,comments.content, comments.userID, comments.date FROM user INNER JOIN comments ON user.userID = comments.userID WHERE comments.postID = ${req.params.id} ORDER BY comments.date DESC`,
+    connect.query(`SELECT user.userID, user.firstName, user.lastName, user.admin, comments.commentID,comments.content, comments.userID, comments.date FROM user INNER JOIN comments ON user.userID = comments.userID WHERE comments.postID = ${req.params.id} ORDER BY comments.date DESC`,
         (error, result, field) => {
             if (error) {
                 return res.status(400).json({
                     error
                 });
             }
+            console.log(res);
             return res.status(200).json(result);
         });
 };

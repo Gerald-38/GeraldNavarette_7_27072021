@@ -57,9 +57,9 @@ export default {
                 }
             )
             .then(res => {
-                this.post = res.data[0];                
-                if(this.$user.userID === this.post.userID){
-                    this.authorized = true;                    
+                this.post = res.data[0];
+                if(this.$user.userID === this.post.userID || this.$user.admin == 1){
+                    this.authorized = true;
                  }
                 else{
                     this.authorized = false;
@@ -87,7 +87,6 @@ export default {
             // if (!image) {
             //     image = this.post.gifUrl;
             // }
-
             console.log(image);
             if(image) { // si positive, c'est qu'il y a
                 var formData = new FormData()      
@@ -125,10 +124,8 @@ export default {
             
                 )
                 .then(location.href = "/");
-            }           
-
-           
-            // .then(location.href = "/");
+            }            
+            location.href = "/";
         }
     }
 }
@@ -146,7 +143,7 @@ export default {
     }
     .post-title {
         margin: 0;
-        color: red;
+        color: rgb(0,0,0);
         font-size: 2rem;
     }
     .post-content{
@@ -174,7 +171,7 @@ export default {
     #modify-title {
         margin: 0;
         margin-bottom: 20px;
-        color: red;
+        color: rgb(0,0,0);
         font-size: 2rem;
     }
     #modify-content{

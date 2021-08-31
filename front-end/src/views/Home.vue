@@ -1,8 +1,9 @@
 <template>
-  <div class="home">    
+  <div class="home">        
     <Connection/>
+    <NewPost v-if="connected"/> 
     <Posts v-if="connected"/> 
-    <NewPost v-if="connected"/>
+    
   </div>
 </template>
 

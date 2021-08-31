@@ -1,114 +1,84 @@
-<!-- COMPONENT CREATEPOST - Composants de la création d'un post -->
-
+  
 <template>
-  <div class="post-wrapper">
-    <form name="createPost">
-      
-      <!-- Textarea du post -->
-      <input 
-      type="text" 
-      placeholder="entrez le titre" 
-      id="newpost-title" 
-      required>
-      <br>
-      <span id='missTitle'></span>
-      <br>
-      <textarea
-        type = "text"
-        name="message"
-        class=""
-        cols="130"
-        rows="3"
-        maxlength="180"
-        required 
-        placeholder="entrez le contenu"
-        v-model="content"
-        id="newpost-content"
-      ></textarea>
-      <br>
-      <span id='missContent'></span>
-      <!-- Fin -->
+  <div class="newPost">
+    <div class="newPost-create-btn" @click="visible = true">Ajouter un nouveau post</div>
 
-      <!-- Sélection du Gif -->
-      <div id='main'>
-        <input type="file" name="image" id="newpost-image" required> 
+    <transition name="fade">
+      <div class="overlay" v-if="visible">
+          <div class="form-wrapper">
+            <span class="form-close"  @click="visible = false">Annuler</span>
+            <br>
+            <form class="newPost-form" @submit.prevent="addPost()">
+              <input 
+                type="text" 
+                placeholder="entrez le titre" 
+                id="newpost-title" 
+                required>
+            <br>
+            <!-- <span id='missTitle'></span> -->
+            <br>
+            <textarea
+              type = "text"
+              name="message"
+              class=""
+              cols="130"
+              rows="3"
+              maxlength="180"
+              required 
+              placeholder="entrez le contenu"
+              v-model="content"
+              id="newpost-content"
+            ></textarea>
+            <br>
+            <!-- <span id='missContent'></span> -->
+            <!-- Fin -->
+
+            <!-- Sélection du Gif -->
+            <div id='main'>
+              <input type="file" name="image" id="newpost-image" required> 
+            </div>
+            <!-- <span id='missImage'></span> -->
+            <br>                  
+
+          <button id="newPost-btn" type="submit" >Publier</button>          
+
+            </form>
+          </div>
       </div>
-      <span id='missImage'></span>
-      <br>
- 
-      <!-- Bouton pour le publier -->
-      <button
-        class=""
-        type="submit"
-        v-on:click.prevent="addPost()"
-      >Publier</button>
-      <!-- Fin -->
+    </transition>
 
-    </form>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
+// import Editor from '@tinymce/tinymce-vue'
 export default {
-  name: "CreatePost",
-  data: () => {
-    return {
-        // alt_text,
-        title: "",
-        content: "", 
-        // gifUrl: null, 
-        image: "",
-    };
-  },
-  methods: {
-    addPost(){
+    name: 'NewPost',
+    components: {
+      // editor: Editor
+    },
+    data(){
+        return{
+            visible: false,
+            content: '',
+            title: "",
+            image: "",
+        }
+    },
+    methods: {
+      addPost(){
+        const userID = this.$user.userID;            
+        const title = document.getElementById("newpost-title").value;
+        const content = document.getElementById("newpost-content").value; 
+        let image = document.getElementById('newpost-image').files[0] 
+        var formData = new FormData()
+        
+        formData.append('userID', userID)
+        formData.append('title', title)
+        formData.append('image', image)
+        formData.append('content', content) 
 
-      // VALIDATION DE LA SAISIE
-      
-      const titleValid = document.getElementById('newpost-title').checkValidity();
-      const contentValid = document.getElementById('newpost-content').checkValidity();
-      const imageValid = document.getElementById('newpost-image').checkValidity();       
-      const missTitle = document.getElementById('missTitle');
-      const missContent = document.getElementById('missContent');
-      const missImage = document.getElementById('missImage');
-
-      if (!titleValid){
-        missTitle.textContent = 'Titre manquant';
-        missTitle.style.color = 'red' ;      
-      } else{ 
-        missTitle.textContent = " ";
-      }
-
-      if (!contentValid){
-        missContent.textContent = 'Contenu manquant';
-        missContent.style.color = 'red' ;      
-      } else{ 
-        missContent.textContent = " ";
-      }
-
-      if (!imageValid){
-        missImage.textContent = 'Image manquante';
-        missImage.style.color = 'red' ;      
-      } else{ 
-        missImage.textContent = " ";
-      }
-      // FIN VALIDATION 
-
-      const userID = this.$user.userID;            
-      const title = document.getElementById("newpost-title").value;
-      const content = document.getElementById("newpost-content").value; 
-      let image = document.getElementById('newpost-image').files[0] 
-      var formData = new FormData()
-      
-      formData.append('userID', userID)
-      formData.append('title', title)
-      formData.append('image', image)
-      formData.append('content', content) 
-
-
-      if (titleValid && contentValid && imageValid) {
         axios.post(`${this.$apiUrl}/posts`, 
           formData,
           {
@@ -127,17 +97,104 @@ export default {
               if (error.response.status === 401) {
                   this.message = "Email non disponible.";
               }  
-        });         
-      }
-      else {
-        alert('saisie incomplete');
-      }                   
-    }    
-  },
-};
+        });               
+      }    
+    }
+}
 </script>
 
-<style scoped>
+<style scoped> 
+    .newPost{
+        padding: 20px 20px 0px 20px ;   
+    }
+    .newPost-create-btn{
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 30px;
+        background-color: rgb(43, 42, 42);
+        color: white;
+        max-width: 300px;
+        font-size: 1.5rem;
+        transition-duration: 0.2s;
+        cursor: pointer;
+    }
+    .newPost-create-btn:hover{
+        transform: scale(1.02);
+    }
+    .overlay{
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(31, 30, 30, 0.678);
+        z-index: 1;
+    }
+    .form-wrapper{
+        box-sizing: border-box;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 5%;
+        width: 800px;
+        height: 80%;
+        border-radius: 30px;
+    }
+    .form-close{
+        color: red;
+        cursor: pointer;
+        align-self: flex-end;
+    }
+    .newPost-form{
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+    form input{
+        font-size: 1.05rem;
+        padding: 10px;
+        margin-bottom: 15px;
+        text-align: center;
+        text-align: left;
+        margin-bottom: 30px;    
+    }
+    form label{
+        color: red;
+        font-weight: bold;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+    #newPost-content{
+        height: 200px;
+        width: calc(100% - 20px);
+        padding: 10px;
+        resize: none;
+        overflow-y: scroll;
+    }
+    #newPost-btn{
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 1.1rem;
+        color: white;
+        background-color: rgb(43, 42, 42);
+        border: none;
+        border-radius: 10px;
+        transition-duration: 0.2s;
+        cursor: pointer;
+    }
+    /* Transition */
+    .fade-enter-active, .fade-leave-active {
+    transition: opacity .8s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    }
+
+
+    /* AJOUTS DE STYLE */
     /* Post style */
     /* .post-wrapper{
         margin: 50px auto 30px auto;

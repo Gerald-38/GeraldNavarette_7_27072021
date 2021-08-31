@@ -11,10 +11,10 @@
 
         <div class="comments">
             <div class="comment" v-for="comment in comments" :key="comment.commentID">
-            <div class="comment-info">Par {{comment.firstName}} {{comment.lastName}} le {{dateFormat(comment.date)}} 
-                <span @click="deleteComment(comment.commentID)" v-if="comment.userID == $user.userID || $user.admin == 1" :key="comment.commentID">Supprimer</span> 
-            </div>
-            {{comment.content}}
+                <div class="comment-info">Par {{comment.firstName}} {{comment.lastName}} le {{dateFormat(comment.date)}} 
+                    <span @click="deleteComment(comment.commentID)" v-if="comment.userID == $user.userID || isAdmin == 1" :key="comment.commentID">Supprimer</span>                 
+                </div>
+                {{comment.content}}
             </div>
         </div>
         
@@ -27,22 +27,33 @@ export default {
     names: 'Comments',
     data(){
         return{
-            comments: [],            
+            comments: [],  
+            isAdmin: 0,          
         }
     },
     mounted(){
         this.getAllComments();
+        this.checkAdmin();
     },
     methods: {
+        checkAdmin() {
+            let currentUser=JSON.parse(localStorage.getItem('user'));
+            console.log(currentUser.admin);
+            if (currentUser.admin == 1) {
+                this.isAdmin = 1;
+            }            
+        },
         newComment(){
             const postID = parseInt(this.$route.params.id);
             const userID = this.$user.userID;
+            const admin = this.$user.admin;
             const content = document.getElementById('new-comment').value;
             axios.post(`${this.$apiUrl}/posts/${postID}/comment/`,
                 {
                     postID,
                     userID,
-                    content
+                    content,
+                    admin
                 },
                 {
                     headers: {
@@ -66,6 +77,7 @@ export default {
             )
             .then(res => {
                 this.comments = res.data;
+                console.log(res.data[0]);
             });
         },
         deleteComment(commentID){
@@ -120,11 +132,14 @@ export default {
     }
     .comment{
         padding: 20px 20px 20px 30px;
-        border-left: 5px solid rgb(43, 42, 42);
+        background-color: rgba(228,230,235,0.6);
+        border-radius: 10px;
+        /* border-left: 5px solid rgb(43, 42, 42); */
         margin-top: 20px;
         box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
         text-align: left;
         transition-duration: .1s;
+
     }
     .comment-info{
         display: flex;

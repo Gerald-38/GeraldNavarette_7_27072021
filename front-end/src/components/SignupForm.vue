@@ -18,9 +18,10 @@
 
             <label for="signup-password-verification">Vérification du mot de passe :</label>
             <input id="signup-password-verification" type="password" placeholder="Vérifier mot de passe" required>
+            <!-- <p>Rappel : Mot de passe requis : 6 caractères minimun. Au moins 1 Majuscule, 1chiffre, 1 minuscule. Sans espaces</p> -->
 
-            <label for="signup-pseudo">Pseudo :</label>
-            <input id="signup-pseudo" type="text" placeholder="Pseudo" required>
+            <!-- <label for="signup-pseudo">Pseudo :</label>
+            <input id="signup-pseudo" type="text" placeholder="Pseudo" required> -->
 
             <div class="error-message">{{message}}</div>
 
@@ -45,15 +46,18 @@ export default {
             const password = document.getElementById("signup-password").value;
             const passwordVerif = document.getElementById("signup-password-verification").value;
             const email = document.getElementById("signup-email").value;
-            const pseudo = document.getElementById("signup-pseudo").value;
-            if(password === passwordVerif){
+            // const pseudo = document.getElementById("signup-pseudo").value;
+            var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+            if( password != passwordVerif || !(password.match(passwordSchema))){                
+                this.message = "Vérifier le mot de passe : il doit contenir entre 6 et 20 caracteres, une lettre minuscule et un chiffre, et doit être identique dans les deux champs de saisie";
+            } else {
                 axios.post(`${this.$apiUrl}/user/signup`,
                     {
                         email,
                         firstName,                        
                         lastName,
                         password,
-                        pseudo
+                        // pseudo
                     },
                     {
                         headers: {
@@ -63,7 +67,8 @@ export default {
                 )
                 .then(res => {
                     if(res.status === 201) {
-                         location.href = '/';
+                        alert('utilisateur créé ! Vous pouvez vous connecter !')
+                        location.href = '/';
                     }
                 })
                 .catch((error) => {
@@ -72,10 +77,9 @@ export default {
                     }  
                 });
             }
-            else if( password != passwordVerif){
-                this.message = "Vérifier le mot de passe";
-            }
-            
+            // else if( password != passwordVerif){
+            //     this.message = "Vérifier le mot de passe";
+            // }            
         }
     }
 }

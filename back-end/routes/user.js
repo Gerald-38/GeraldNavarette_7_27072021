@@ -9,16 +9,17 @@ const userCtrl = require("../controllers/user");
 
 // IMPORTATION MIDDLEWARES
 const auth = require("../middleware/auth"); // Crée un token d'identification
-const multer = require("../middleware/multer-config"); // Permet d'envoyer un fichier dans la requête
+// const multer = require("../middleware/multer-config"); // Permet d'envoyer un fichier dans la requête
+const validation = require ("../middleware/verifyPassword")
 // FIN IMPORTATION
 
 // ROUTE
-router.post("/signup", userCtrl.signup);
+router.post("/signup", validation, userCtrl.signup);
 router.post("/login", userCtrl.login);
 router.delete("/:id/delete", auth, userCtrl.delete); 
 router.get("/:id/profile", auth, userCtrl.profile);
 // router.get("/:id/role", userCtrl.role);
-router.put("/:id/modify", auth, multer, userCtrl.modify);
+router.put("/:id/modify", auth, userCtrl.modify);
 // ROUTE
 
 module.exports = router;
