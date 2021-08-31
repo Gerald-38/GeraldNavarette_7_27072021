@@ -61,8 +61,7 @@ export default {
     .fas{
         font-size: 1.5rem;
     }
-    nav div:hover{
-        /* color: rgb(117, 117, 117); */
+    nav div:hover{        
         color: red;
         border-bottom: 3px solid rgb(43, 42, 42);
     }

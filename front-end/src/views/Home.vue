@@ -8,7 +8,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Posts from '@/components/Posts.vue';
 import Connection from './Connection.vue';
 import NewPost from '@/components/NewPost.vue';

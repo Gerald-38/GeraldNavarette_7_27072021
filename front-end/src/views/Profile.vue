@@ -1,21 +1,18 @@
 <template>
     <div class="Profile">        
         <Connection/>
-        <UserProfile v-if="connected"/>
-        <!-- <UserPosts v-if="connected"/> -->        
+        <UserProfile v-if="connected"/>             
     </div>
 </template>
 
 <script>
 import UserProfile from '@/components/UserProfile.vue';
 import Connection from './Connection.vue';
-// import UserPosts from '@/components/UserPosts.vue';
 export default {
     name: 'Profile',
     components: {
         UserProfile,
         Connection,
-        // UserPosts
   },
   data() {
     return{

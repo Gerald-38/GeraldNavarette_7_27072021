@@ -15,7 +15,6 @@
                 id="newpost-title" 
                 required>
             <br>
-            <!-- <span id='missTitle'></span> -->
             <br>
             <textarea
               type = "text"
@@ -30,14 +29,10 @@
               id="newpost-content"
             ></textarea>
             <br>
-            <!-- <span id='missContent'></span> -->
-            <!-- Fin -->
-
             <!-- Sélection du Gif -->
             <div id='main'>
               <input type="file" name="image" id="newpost-image" required> 
             </div>
-            <!-- <span id='missImage'></span> -->
             <br>                  
 
           <button id="newPost-btn" type="submit" >Publier</button>          
@@ -52,11 +47,9 @@
 
 <script>
 import axios from 'axios';
-// import Editor from '@tinymce/tinymce-vue'
 export default {
     name: 'NewPost',
     components: {
-      // editor: Editor
     },
     data(){
         return{
@@ -185,34 +178,13 @@ export default {
         transition-duration: 0.2s;
         cursor: pointer;
     }
-    /* Transition */
     .fade-enter-active, .fade-leave-active {
     transition: opacity .8s;
     }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    .fade-enter, .fade-leave-to {
     opacity: 0;
     }
 
-
-    /* AJOUTS DE STYLE */
-    /* Post style */
-    /* .post-wrapper{
-        margin: 50px auto 30px auto;
-        padding: 30px;
-        max-width: 800px;
-        text-align: left;
-        box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
-        border-bottom: solid red 5px;
-    }
-    .newpost-title {
-        margin: 0;
-        color: red;
-        font-size: 2rem;
-    }
-    .newpost-content{
-        margin-top: 20px;
-    } */
-    /* Modify style */
     .post-wrapper{
         display: flex;
         flex-direction: column;

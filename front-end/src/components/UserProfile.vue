@@ -113,7 +113,6 @@ export default {
     },
 
     modifyUser() {
-      // Update les autres infos
       const userId = this.$user.userID;
       const email = document.getElementById('new-email').value;
       const firstName = document.getElementById('new-firstName').value;
@@ -123,10 +122,6 @@ export default {
       const newPasswordVerif = document.getElementById("new-password-verification").value;
 
       var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
- 
-      // if( newPassword != newPasswordVerif || !(newPassword.match(passwordSchema))){
-      //           this.message = "Vérifier le mot de passe : il doit contenir au moins 6 caracteres, une lettre minuscule et un chiffre, et doit être identique dans les deux champs de saisie";
-      // } else {
 
         if (newPassword === "") {
           var userData = {
@@ -169,18 +164,7 @@ export default {
               )
               location.reload();   
           }
-        }                
-        // axios.put(`${this.$apiUrl}/user/${userId}/modify`, 
-        // userData,
-        //   {
-        //       headers: {
-        //           'Content-Type': 'application/json',
-        //           'Authorization': `Bearer ${this.$token}`
-        //       }
-        //   }
-        // )
-        // location.reload();      
-         
+        }            
       }
     }
   }
@@ -193,11 +177,9 @@ export default {
     .profile-info{
         margin: 50px auto;
         max-width: 800px;
-        /* text-align: left; */
         padding: 20px 20px 20px 30px;
         background-color: rgba(228,230,235,0.6);
         border-radius: 10px;
-        /* border-left: 5px solid rgb(43, 42, 42); */
         margin-top: 20px;
         box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
         text-align: left;
@@ -294,3 +276,4 @@ export default {
         width: 1px;
     }
 </style>
+

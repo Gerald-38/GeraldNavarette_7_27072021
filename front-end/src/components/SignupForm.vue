@@ -17,8 +17,7 @@
             <input id="signup-password" type="password" placeholder="Mot de passe" required>
 
             <label for="signup-password-verification">Vérification du mot de passe :</label>
-            <input id="signup-password-verification" type="password" placeholder="Vérifier mot de passe" required>
-            <!-- <p>Rappel : Mot de passe requis : 6 caractères minimun. Au moins 1 Majuscule, 1chiffre, 1 minuscule. Sans espaces</p> -->
+            <input id="signup-password-verification" type="password" placeholder="Vérifier mot de passe" required>            
 
             <!-- <label for="signup-pseudo">Pseudo :</label>
             <input id="signup-pseudo" type="text" placeholder="Pseudo" required> -->
@@ -76,10 +75,7 @@ export default {
                         this.message = "Email déjà utilisé.";
                     }  
                 });
-            }
-            // else if( password != passwordVerif){
-            //     this.message = "Vérifier le mot de passe";
-            // }            
+            }         
         }
     }
 }

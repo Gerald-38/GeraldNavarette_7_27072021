@@ -83,12 +83,9 @@ export default {
             const postId = this.$route.params.id;
             const title = document.querySelector('#modify-title').value;
             const content = document.querySelector('#modify-content').value;
-            let image = document.getElementById('modify-image').files[0] 
-            // if (!image) {
-            //     image = this.post.gifUrl;
-            // }
+            let image = document.getElementById('modify-image').files[0]  
             console.log(image);
-            if(image) { // si positive, c'est qu'il y a
+            if(image) { 
                 var formData = new FormData()      
                 formData.append('postID', postId)
                 formData.append('title', title)
@@ -106,8 +103,6 @@ export default {
                 )
                 .then(location.href = "/");
             } else {
-                // image n'a pas été modifièe
-                // donc on prépare une requete JSON
                 let postData = {
                     title: title,
                     content: content,
@@ -154,8 +149,6 @@ export default {
         max-width: 100%;
         max-height: 100%;
     }
-
-
 
     /* Modify style */
     .modify-wrapper{
