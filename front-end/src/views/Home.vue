@@ -2,8 +2,7 @@
   <div class="home">        
     <Connection/>
     <NewPost v-if="connected"/> 
-    <Posts v-if="connected"/> 
-    
+    <Posts v-if="connected"/>     
   </div>
 </template>
 

@@ -1,4 +1,4 @@
-<template>
+<template>    
     <div class="header">
         <router-link style="text-decoration: none; color: inherit;" to='/'>
         <h1>
@@ -29,6 +29,7 @@ export default {
         }
     }
 }
+
 </script>
 
 <style scoped>

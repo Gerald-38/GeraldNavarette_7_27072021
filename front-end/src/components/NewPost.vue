@@ -184,7 +184,7 @@ export default {
     .fade-enter, .fade-leave-to {
     opacity: 0;
     }
-
+    /* Modify style */
     .post-wrapper{
         display: flex;
         flex-direction: column;

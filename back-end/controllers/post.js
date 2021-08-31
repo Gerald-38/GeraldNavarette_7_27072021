@@ -187,10 +187,7 @@ exports.getAllComments = (req, res, next) => {
 
 // DELETE COMMENT POUR SUPPRIMER UN COMMENTAIRE
 exports.deleteComment = (req, res, next) => {
-    connect.query(`DELETE FROM comments WHERE commentID = ${req.params.id}`, (error, result, field) => {
-    // let sqlDeleteComment;
-    // sqlDeleteComment = "DELETE FROM comments WHERE commentID = ?"
-    // connect.query(sqlDeleteComment, [commentID], function(err,result) {        
+    connect.query(`DELETE FROM comments WHERE commentID = ${req.params.id}`, (error, result, field) => {      
         if (error) {
             return res.status(400).json({
                 error

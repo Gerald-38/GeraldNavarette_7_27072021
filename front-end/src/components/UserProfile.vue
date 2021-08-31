@@ -34,7 +34,7 @@
 
             <button class="new-btn" type="submit">Valider les modifications</button>
             <br>  
-            <button class="new-btn" type="submit" @click="modify = flase" >Annuler les modifications</button>
+            <button class="new-btn" type="submit" @click="modify = false" >Annuler les modifications</button>
           </form>
         </div>
         <!-- <div class="delete-profile" @click="deleteUser()">Supprimer le compte</div> -->
@@ -172,7 +172,7 @@ export default {
 
 <style scoped>
     .profile-welcome {
-      color: red;
+      color: #f05454;
     }
     .profile-info{
         margin: 50px auto;
@@ -198,7 +198,7 @@ export default {
       font-weight: bold;
     }
     .delete-profile, .modify-profile{
-      color: red;
+      color: #f05454;
       margin-bottom: 30px;
       font-size: 24px;
       cursor: pointer;
@@ -248,8 +248,9 @@ export default {
     .new-btn-red{
       padding: 10px;
       font-size: 1.1rem;
+      /* font-weight: bold; */
       color: white;
-      background-color: red;
+      background-color: #222831 ;
       border: none;
       border-radius: 10px;
       transition-duration: 0.2s;

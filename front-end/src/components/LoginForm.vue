@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper">
         <img src="../assets/img/groupomania-logo.png" alt="Groupomania logo">
-        <nav><router-link to="/" class="active">Se connecter</router-link> | <router-link to="/signup">S'inscrire</router-link></nav>
+        <p>Bienvenue sur votre réseau social ! N'hésitez pas à partager et commenter. Connectez vous pour échanger ! :-)</p>
+        <!-- <nav><router-link to="/" class="active">Se connecter</router-link> | <router-link to="/signup">S'inscrire</router-link></nav> -->
         <form @submit.prevent = login()>
 
             <label for="login-email">Email :</label>
@@ -12,10 +13,9 @@
 
             <div class="error-message">{{message}}</div>
 
-            <button id="login-btn" type="submit">Connexion</button>
-
-            
+            <button id="login-btn" type="submit">Connexion</button>            
         </form>
+        <p>vous n'avez pas encore de comte ?</p> <router-link to="/signup">Inscrivez vous ici</router-link>        
     </div>
 </template>
 

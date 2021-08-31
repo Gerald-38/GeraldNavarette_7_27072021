@@ -2,7 +2,8 @@
     <div class="wrapper">
         <form @submit.prevent = signup()>
             <img src="../assets/img/groupomania-logo.png" alt="Groupomania logo">
-            <nav><router-link to="/">Se connecter</router-link> | <router-link to="/signup" class="active">S'inscrire</router-link></nav>
+            <p>L'inscription est très simple et se fait en quelques clics !</p>
+            <!-- <nav><router-link to="/">Se connecter</router-link> | <router-link to="/signup" class="active">S'inscrire</router-link></nav> -->
 
             <label for="signup-email">Email :</label>
             <input id="signup-email" type="email" placeholder="Email" required>
@@ -25,6 +26,8 @@
             <div class="error-message">{{message}}</div>
 
             <button id="signup-btn" type="submit">S'inscrire</button>
+            <br>
+            <router-link to="/">Retour à l'accueil</router-link>
         </form>
     </div>
 </template>
