@@ -4,12 +4,6 @@ DROP DATABASE IF EXISTS GroupomaniaDataBase;
 
 CREATE DATABASE GroupomaniaDataBase CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
-CREATE USER 'superAdmin' IDENTIFIED BY 'admin';
-
-GRANT ALL
-ON GroupomaniaDatabBase.*
-TO 'superAdmin';
-
 USE GroupomaniaDataBase;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
