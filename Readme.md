@@ -31,6 +31,7 @@ Implémenter un stockage de données sécurisé en utilisant SQL
 Cloner le projet
 
 Dans mySQLServer, importer le fichier SQL :
+```
 /database/GroupomaniaDataBase.sql
 ```
 
@@ -44,15 +45,6 @@ DB_DATABASE = "groupomaniadatabase"
 DB_TOKEN = "RANDOM_TOKEN_SECRET"
 ```
 ----------
-
-To access admin user, enter the following infos on the connection page :
-```
-Email:
-admin@admin.com
-
-Password:
-admin
-```
 
 ### Installation du back end - depuis la racine du projet
 ```
@@ -93,3 +85,12 @@ Entrer l'adresse mail : service_comm@groupomania.fr
 Entrer le mot de passe provisoire : Azerty2
 Modifier le mot de passe dans le profil utilisateur
 
+
+To access admin user, enter the following infos on the connection page :
+```
+Email:
+admin@admin.com
+
+Password:
+admin
+```
