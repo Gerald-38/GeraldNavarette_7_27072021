@@ -47,7 +47,7 @@ CREATE TABLE `user` (
 -- Table `comments`--
 
 CREATE TABLE `comments` (
-  `commentID` int(10) UNSIGNED NOT NULL,
+  `commentsID` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
   `postID` int(10) UNSIGNED NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp(),
@@ -78,8 +78,8 @@ ALTER TABLE `user`
 
 
 -- Index pour la table `comments`--
-ALTER TABLE `comment`
-  ADD PRIMARY KEY (`commentID`),
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`commentsID`),
   ADD KEY `fk_userId_comments` (`userID`),
   ADD KEY `fk_postId_comments` (`postID`);
 
@@ -95,13 +95,13 @@ ALTER TABLE `user`
 
 
 -- AUTO_INCREMENT pour la table `comments`--
-ALTER TABLE `comment`
-  MODIFY `commentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `comments`
+  MODIFY `commentsID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 
 
 -- Contraintes pour la table `comments`--
-ALTER TABLE `comment`
+ALTER TABLE `comments`
   ADD CONSTRAINT `fk_postId_comments` FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_userId_comments` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
