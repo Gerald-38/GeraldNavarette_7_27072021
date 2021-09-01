@@ -1,14 +1,16 @@
 SET NAMES utf8;
 
-DROP DATABASE IF EXISTS GroupomaniaDB;
+DROP DATABASE IF EXISTS GroupomaniaDataBase;
 
-CREATE DATABASE GroupomaniaDB CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE GroupomaniaDataBase CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE USER 'superAdmin' IDENTIFIED BY 'admin';
 
 GRANT ALL
-ON GroupomaniaDB.*
-TO 'supAdmin';
+ON GroupomaniaDatabBase.*
+TO 'superAdmin';
 
-USE GroupomaniaDB;
+USE GroupomaniaDataBase;
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -58,6 +60,17 @@ CREATE TABLE `comments` (
   `content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- creation de l'administrateur 
+
+INSERT INTO `users` (`id`, `nom`, `prenom`, `password`, `email`, `admin`) VALUES
+('', 'Christelle', 'De la Comm', 'comm@groupomania.fr', 'Azerty1', 1);
+
+--
+
+INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `admin`, `pseudo`, `dateCreation`) VALUES
+(null, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now())
+
+--
 
 -- Index pour la table `posts`--
 ALTER TABLE `posts`

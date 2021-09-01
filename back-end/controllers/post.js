@@ -12,6 +12,7 @@ const fs = require("fs");
                     error
                 });
             }
+            console.log(result);
             return res.status(200).json(result);
         });
     };
@@ -20,18 +21,18 @@ const fs = require("fs");
 
 // GETONEPOST pour obtenir un message
 
-exports.getOnePost = (req, res, next) => {
-    const postId = req.params.id;
-    let onePostQuery = 'SELECT * FROM post WHERE postID = ?'
-    connect.query(onePostQuery, [postId], (error, result, field) => {
-        if (error) {
-            return res.status(400).json({
-                error
-            });
-        }
-        return res.status(200).json(result);
-    });
-};
+    exports.getOnePost = (req, res, next) => {
+        const postId = req.params.id;
+        let onePostQuery = 'SELECT * FROM post WHERE postID = ?'
+        connect.query(onePostQuery, [postId], (error, result, field) => {
+            if (error) {
+                return res.status(400).json({
+                    error
+                });
+            }
+            return res.status(200).json(result);
+        });
+    };
 // 
 
 // CREATEPOST pour céer les messages
