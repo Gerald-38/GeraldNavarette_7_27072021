@@ -48,7 +48,7 @@ DB_TOKEN = "RANDOM_TOKEN_SECRET"
 
 ### Installation du back end - depuis la racine du projet
 ```
-cd bac-kend
+cd back-end
 ```
 
 ```
@@ -79,18 +79,11 @@ npm run serve
 ```
 http://localhost:8080/
 ```
-###Connexion au compte d'aministration du réseau social
 
-Entrer l'adresse mail : service_comm@groupomania.fr
-Entrer le mot de passe provisoire : Azerty2
-Modifier le mot de passe dans le profil utilisateur
-
-
-To access admin user, enter the following infos on the connection page :
+### Connexion au compte d'aministration du réseau social
 ```
-Email:
-admin@admin.com
 
-Password:
-admin
-```
+- Entrer l'adresse mail : service_comm@groupomania.fr
+- Entrer le mot de passe provisoire : Azerty2
+- Modifier le mot de passe dans le profil utilisateur
+
