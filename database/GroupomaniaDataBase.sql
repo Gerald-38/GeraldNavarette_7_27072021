@@ -16,9 +16,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 
--- Table `posts`--
+-- Table ``--
 
-CREATE TABLE `posts` (
+CREATE TABLE `post` (
   `postID` int(10) UNSIGNED NOT NULL,
   `userID` int(10) UNSIGNED NOT NULL,
   `title` varchar(250) NOT NULL,
@@ -28,9 +28,9 @@ CREATE TABLE `posts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- Table `users`--
+-- Table `user`--
 
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `userID` int(10) UNSIGNED NOT NULL,
   `email` varchar(80) NOT NULL,
   `firstName` varchar(40) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE `comments` (
 
 -- creation de l'administrateur 
 
-INSERT INTO `users` (`id`, `nom`, `prenom`, `password`, `email`, `admin`) VALUES
+INSERT INTO `user` (`userID`, `firstName`, `lastName`, `password`, `email`, `admin`) VALUES
 ('', 'Christelle', 'De la Comm', 'comm@groupomania.fr', 'Azerty1', 1);
 
 --
@@ -66,48 +66,48 @@ INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `adm
 
 --
 
--- Index pour la table `posts`--
- ALTER TABLE `posts`
+-- Index pour la table `post`--
+ ALTER TABLE `post`
   ADD PRIMARY KEY (`postID`),
   ADD KEY `fk_userId_posts` (`userID`);
 
 
--- Index pour la table `users`--
-ALTER TABLE `users`
+-- Index pour la table `user`--
+ALTER TABLE `user`
   ADD PRIMARY KEY (`userID`);
 
 
 -- Index pour la table `comments`--
-ALTER TABLE `comments`
+ALTER TABLE `comment`
   ADD PRIMARY KEY (`commentID`),
   ADD KEY `fk_userId_comments` (`userID`),
   ADD KEY `fk_postId_comments` (`postID`);
 
 
--- AUTO_INCREMENT pour la table `posts`--
-ALTER TABLE `posts`
+-- AUTO_INCREMENT pour la table `post`--
+ALTER TABLE `post`
   MODIFY `postID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 
--- AUTO_INCREMENT pour la table `users`--
-ALTER TABLE `users`
+-- AUTO_INCREMENT pour la table `user`--
+ALTER TABLE `user`
   MODIFY `userID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 
 -- AUTO_INCREMENT pour la table `comments`--
-ALTER TABLE `comments`
+ALTER TABLE `comment`
   MODIFY `commentID` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 
 
 -- Contraintes pour la table `comments`--
-ALTER TABLE `comments`
-  ADD CONSTRAINT `fk_postId_comments` FOREIGN KEY (`postID`) REFERENCES `posts` (`postID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_userId_comments` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
+ALTER TABLE `comment`
+  ADD CONSTRAINT `fk_postId_comments` FOREIGN KEY (`postID`) REFERENCES `post` (`postID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_userId_comments` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 
--- Contraintes pour la table `posts`--
-ALTER TABLE `posts`
-  ADD CONSTRAINT `fk_userId_posts` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
+-- Contraintes pour la table `post`--
+ALTER TABLE `post`
+  ADD CONSTRAINT `fk_userId_posts` FOREIGN KEY (`userID`) REFERENCES `user` (`userID`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
