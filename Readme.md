@@ -81,7 +81,6 @@ http://localhost:8080/
 ```
 
 ### Connexion au compte d'aministration du réseau social
-```
 
 - Entrer l'adresse mail : service_comm@groupomania.fr
 - Entrer le mot de passe provisoire : Azerty2
