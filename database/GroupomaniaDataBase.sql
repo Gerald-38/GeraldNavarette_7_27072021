@@ -62,7 +62,7 @@ INSERT INTO `user` (`userID`, `firstName`, `lastName`, `password`, `email`, `adm
 --
 
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `admin`, `pseudo`, `dateCreation`) VALUES
-(null, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now());
+(1, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now());
 
 --
 
