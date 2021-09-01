@@ -36,8 +36,8 @@ CREATE TABLE `users` (
   `firstName` varchar(40) NOT NULL,
   `lastName` varchar(40) NOT NULL,
   `password` varchar(80) NOT NULL,
-  `pseudo` varchar(30), NOT NULL,
-  `admin` tinyint(1) NOT NULL DEFAULT 0  
+  `pseudo` varchar(30) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT 0,  
   `bio` varchar(255),
   `avatarUrl` varchar (150) NOT NULL DEFAULT 'http://localhost:3000/images/avatarDefault.jpg',
   `dateCreation` DATETIME NOT NULL  
@@ -62,12 +62,12 @@ INSERT INTO `users` (`id`, `nom`, `prenom`, `password`, `email`, `admin`) VALUES
 --
 
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `admin`, `pseudo`, `dateCreation`) VALUES
-(null, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now())
+(null, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now());
 
 --
 
 -- Index pour la table `posts`--
-ALTER TABLE `posts`
+ ALTER TABLE `posts`
   ADD PRIMARY KEY (`postID`),
   ADD KEY `fk_userId_posts` (`userID`);
 
