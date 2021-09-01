@@ -35,7 +35,7 @@ Dans mySQLServer, importer le fichier SQL :
 /database/GroupomaniaDataBase.sql
 ```
 
-A la racine du projet, créer un fichier .env.
+A la racine du dossier back-end, créer un fichier .env.
 Y ajouter ces éléments 
 ```
 DB_HOST = "localhost"
