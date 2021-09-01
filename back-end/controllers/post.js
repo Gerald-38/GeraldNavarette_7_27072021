@@ -173,9 +173,10 @@ exports.createComment = (req, res, next) => {
 
 
 // GET ALL COMMENTS POUR AFFICHER LA LISTE DES COMMENTAIRES
+
 exports.getAllComments = (req, res, next) => {
-    connect.query(`SELECT user.userID, user.firstName, user.lastName, user.admin, comments.commentID,comments.content, comments.userID, comments.date FROM user INNER JOIN comments ON user.userID = comments.userID WHERE comments.postID = ${req.params.id} ORDER BY comments.date DESC`,
-        (error, result, field) => {
+    const getCommentsQuery = `SELECT user.userID, user.firstName, user.lastName, user.admin, comments.commentID,comments.content, comments.userID, comments.date FROM user INNER JOIN comments ON user.userID = comments.userID WHERE comments.postID = ${req.params.id} ORDER BY comments.date DESC`
+    connect.query(getCommentsQuery, function (error, result, field) {
             if (error) {
                 return res.status(400).json({
                     error
@@ -185,10 +186,12 @@ exports.getAllComments = (req, res, next) => {
             return res.status(200).json(result);
         });
 };
+// 
 
 // DELETE COMMENT POUR SUPPRIMER UN COMMENTAIRE
 exports.deleteComment = (req, res, next) => {
-    connect.query(`DELETE FROM comments WHERE commentID = ${req.params.id}`, (error, result, field) => {      
+    const deleteCommentQuery = `DELETE FROM comments WHERE commentID = ${req.params.id}`
+    connect.query(deleteCommentQuery, function (error, result, field) {      
         if (error) {
             return res.status(400).json({
                 error
@@ -197,6 +200,6 @@ exports.deleteComment = (req, res, next) => {
         return res.status(200).json(result);
     });
 }
+// 
 
-//  
 

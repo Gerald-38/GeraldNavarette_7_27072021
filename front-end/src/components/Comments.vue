@@ -123,7 +123,7 @@ export default {
         padding: 10px;
         font-size: 1.1rem;
         color: white;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         border: none;
         border-radius: 10px;
         transition-duration: 0.2s;
@@ -132,7 +132,7 @@ export default {
     }
     .comment{
         padding: 20px 20px 20px 30px;
-        background-color: rgba(228,230,235,0.6);
+        background-color: rgba(232, 232, 232,0.6);
         border-radius: 10px;
         /* border-left: 5px solid rgb(43, 42, 42); */
         margin-top: 20px;

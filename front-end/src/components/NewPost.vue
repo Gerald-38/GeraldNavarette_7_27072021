@@ -104,7 +104,7 @@ export default {
         margin: 30px auto;
         padding: 20px;
         border-radius: 30px;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         color: white;
         max-width: 300px;
         font-size: 1.5rem;
@@ -137,7 +137,7 @@ export default {
         border-radius: 30px;
     }
     .form-close{
-        color: red;
+        color: rgb(240, 84, 84);
         cursor: pointer;
         align-self: flex-end;
     }
@@ -155,7 +155,7 @@ export default {
         margin-bottom: 30px;    
     }
     form label{
-        color: red;
+        color: rgb(240, 84, 84);
         font-weight: bold;
         font-size: 1.3rem;
         margin-bottom: 10px;
@@ -172,7 +172,7 @@ export default {
         padding: 10px;
         font-size: 1.1rem;
         color: white;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         border: none;
         border-radius: 10px;
         transition-duration: 0.2s;
@@ -193,13 +193,13 @@ export default {
         max-width: 800px;
         text-align: left;
         box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
-        border-bottom: solid red 5px;
+        border-bottom: solid rgb(240, 84, 84) 5px;
     }
-    #nexpost-title {
+    #newpost-title {
         margin: 0;
         margin-bottom: 20px;
-        color: red;
-        font-size: 2rem;
+        color: rgb(34, 40, 49);
+        font-size: 1rem;
     }
     #newpost-content{
         margin-top: 20px;
@@ -214,7 +214,7 @@ export default {
         padding: 10px;
         font-size: 1.1rem;
         color: white;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         border: none;
         border-radius: 10px;
         transition-duration: 0.2s;
@@ -222,7 +222,7 @@ export default {
         margin: 0px 20px 50px 20px;
     }
     .delete-btn{
-        background-color: red !important;
+        background-color: rgb(240, 84, 84) !important;
     }
     label{
         font-size: 0.8rem;

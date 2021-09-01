@@ -76,7 +76,7 @@ export default {
         position: relative;
         padding: 20px 20px 20px 30px;
         margin-bottom: 30px;
-        border-left: 5px solid rgb(43, 42, 42);
+        border-left: 5px solid rgb(34, 40, 49);
         box-shadow: 0px 0px 50px -7px rgba(0,0,0,0.1);
         text-align: left;
         transition-duration: .1s;
@@ -92,16 +92,16 @@ export default {
     .post-header{
         display: flex;
         justify-content: space-between;
-        color: rgb(0, 0, 0);
+        color: rgb(34, 40, 49);
         font-size: .8rem;
     }
     .post-modify{
-        color: rgb(219, 17, 17);
+        color: rgb(240, 84, 84);
         font-size: 1rem;
         font-weight: bold;
     }
     .post-title{
-        color: rgb(0, 0, 0); 
+        color: rgb(34, 40, 49); 
     }
     .post-content{
         font-size: .9rem;

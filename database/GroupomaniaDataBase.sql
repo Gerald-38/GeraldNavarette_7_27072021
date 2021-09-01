@@ -56,11 +56,6 @@ CREATE TABLE `comments` (
 
 -- creation de l'administrateur 
 
-INSERT INTO `user` (`userID`, `firstName`, `lastName`, `password`, `email`, `admin`) VALUES
-('', 'Christelle', 'De la Comm', 'comm@groupomania.fr', 'Azerty1', 1);
-
---
-
 INSERT INTO `user` (`userID`, `firstName`, `lastName`, `email`, `password`, `admin`, `pseudo`, `dateCreation`) VALUES
 (1, 'Service', 'Communication', 'service_comm@groupomania.fr', '$2b$10$JO65gtypfcpssSdf49nAVugYsRkXKDq1RD6qS8rmapkYe7NlTfrce', 1, '', Now());
 

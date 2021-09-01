@@ -8,12 +8,12 @@
 
         <nav>
             <router-link to='/' style="text-decoration: none; color: inherit;">
-                <div>Liste des posts</div>
+                <div>posts</div>
             </router-link>
             <router-link to='/profile' style="text-decoration: none; color: inherit;">
-                <div>Mon profil</div>
+                <div>profil</div>
             </router-link>
-            <div id="disconnect-btn" @click = disconnect()>Se déconnecter</div>
+            <div id="disconnect-btn" @click = disconnect()>déconnection</div>
         </nav>
     </div> 
 </template>
@@ -44,7 +44,8 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 30px 70px 20px 70px;
+        padding: 30px 70px 0px 70px;
+        border-bottom: 3px solid rgb(240, 84, 84);
     }
     .header img{
         width: 250px;
@@ -63,8 +64,8 @@ export default {
         font-size: 1.5rem;
     }
     nav div:hover{        
-        color: red;
-        border-bottom: 3px solid rgb(43, 42, 42);
+        color: rgb(240, 84, 84);
+        border-bottom: 3px solid rgb(34, 40, 49);
     }
     @media (max-width: 670px) {
         .header{

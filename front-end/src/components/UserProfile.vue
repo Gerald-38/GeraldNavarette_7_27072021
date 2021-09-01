@@ -198,7 +198,7 @@ export default {
       font-weight: bold;
     }
     .delete-profile, .modify-profile{
-      color: #f05454;
+      color: rgb(240, 84, 84);
       margin-bottom: 30px;
       font-size: 24px;
       cursor: pointer;
@@ -215,7 +215,7 @@ export default {
         margin: 20px;
     }
     .active{
-        color: rgb(255, 2, 2);
+        color: rgb(240, 84, 84);
         font-weight: bold;
     }
     form{
@@ -239,7 +239,7 @@ export default {
         padding: 10px;
         font-size: 1.1rem;
         color: white;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         border: none;
         border-radius: 10px;
         transition-duration: 0.2s;

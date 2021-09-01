@@ -3,19 +3,20 @@
         <img src="../assets/img/groupomania-logo.png" alt="Groupomania logo">
         <p>Bienvenue sur votre réseau social ! N'hésitez pas à partager et commenter. Connectez vous pour échanger ! :-)</p>
         <!-- <nav><router-link to="/" class="active">Se connecter</router-link> | <router-link to="/signup">S'inscrire</router-link></nav> -->
-        <form @submit.prevent = login()>
+        <div class="form-frame">
+            <form @submit.prevent = login()>
+                <label for="login-email">Email :</label>
+                <input id="login-email" type="text" placeholder="Email" required>
+                
+                <label for="login-password">Mot de passe :</label>
+                <input id="login-password" type="password" placeholder="Mot de passe" required>
 
-            <label for="login-email">Email :</label>
-            <input id="login-email" type="text" placeholder="Email" required>
-            
-            <label for="login-password">Mot de passe :</label>
-            <input id="login-password" type="password" placeholder="Mot de passe" required>
+                <div class="error-message">{{message}}</div>
 
-            <div class="error-message">{{message}}</div>
-
-            <button id="login-btn" type="submit">Connexion</button>            
-        </form>
-        <p>vous n'avez pas encore de comte ?</p> <router-link to="/signup">Inscrivez vous ici</router-link>        
+                <button id="login-btn" type="submit">Connexion</button>            
+            </form>
+            <p>vous n'avez pas encore de comte ?</p> <router-link to="/signup">Inscrivez vous ici</router-link>
+        </div>      
     </div>
 </template>
 
@@ -66,7 +67,7 @@ export default {
 <style scoped>
     .wrapper{
         max-width: 500px;
-        margin: 90px auto;
+        margin: 90px auto;        
     }
     img{
         width: 100%;
@@ -76,8 +77,13 @@ export default {
         margin: 20px;
     }
     .active{
-        color: red;
+        color: rgb(240, 84, 84);
         font-weight: bold;
+    }
+    .form-frame {
+        border-radius: 10px;
+        padding : 20px;
+        background-color: rgba(240, 84, 84, 0.75);     
     }
     form{
         display: flex;
@@ -97,7 +103,7 @@ export default {
         padding: 10px;
         font-size: 1.1rem;
         color: white;
-        background-color: rgb(43, 42, 42);
+        background-color: rgb(34, 40, 49);
         border: none;
         border-radius: 10px;
         transition-duration: 0.2s;

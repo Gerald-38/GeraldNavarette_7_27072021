@@ -120,9 +120,7 @@ exports.delete = (req, res, next) => {
                 return res.status(400).json({ message: "Suppression échouée" });
             }
             res.status(200).json({ message: "Utilisateur supprimé !" });
-        });
-        
-
+        });   
 };
 // 
 
