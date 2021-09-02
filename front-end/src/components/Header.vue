@@ -13,9 +13,9 @@
             <router-link to='/profile' style="text-decoration: none; color: inherit;">
                 <div>profil</div>
             </router-link>
-            <div id="disconnect-btn" @click = disconnect()>déconnection</div>
+            <div id="disconnect-btn" @click = disconnect() role="button" tabindex="0" aria-pressed="false" @keydown.enter= disconnect()>déconnection</div>
         </nav>
-    </div> 
+    </div>  
 </template>
 
 <script>

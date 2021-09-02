@@ -1,12 +1,12 @@
   
 <template>
   <div class="newPost">
-    <div class="newPost-create-btn" @click="visible = true">Ajouter un nouveau post</div>
+    <div class="newPost-create-btn" @click="visible = true"  role="button" tabindex="0" aria-pressed="false" @keydown.enter="visible = true">Ajouter un nouveau post</div>
 
     <transition name="fade">
       <div class="overlay" v-if="visible">
           <div class="form-wrapper">
-            <span class="form-close"  @click="visible = false">Annuler</span>
+            <span class="form-close"  @click="visible = false" role="button" tabindex="0" aria-pressed="false" @keydown.enter="visible = false">Annuler</span>
             <br>
             <form class="newPost-form" @submit.prevent="addPost()">
               <input 
@@ -59,39 +59,39 @@ export default {
             image: "",
         }
     },
-    methods: {
-      addPost(){
-        const userID = this.$user.userID;            
-        const title = document.getElementById("newpost-title").value;
-        const content = document.getElementById("newpost-content").value; 
-        let image = document.getElementById('newpost-image').files[0] 
-        var formData = new FormData()
-        
-        formData.append('userID', userID)
-        formData.append('title', title)
-        formData.append('image', image)
-        formData.append('content', content) 
+    methods: {    
+        addPost(){
+            const userID = this.$user.userID;            
+            const title = document.getElementById("newpost-title").value;
+            const content = document.getElementById("newpost-content").value; 
+            let image = document.getElementById('newpost-image').files[0] 
+            var formData = new FormData()
+            
+            formData.append('userID', userID)
+            formData.append('title', title)
+            formData.append('image', image)
+            formData.append('content', content) 
 
-        axios.post(`${this.$apiUrl}/posts`, 
-          formData,
-          {
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${this.$token}`
-              }
-          }
-          )
-          .then(res => {
-              if(res.status === 201) {
-                    location.href = '/';
-              }
-          })
-          .catch((error) => {
-              if (error.response.status === 401) {
-                  this.message = "Email non disponible.";
-              }  
-        });               
-      }    
+            axios.post(`${this.$apiUrl}/posts`, 
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${this.$token}`
+                }
+            }
+            )
+            .then(res => {
+                if(res.status === 201) {
+                        location.href = '/';
+                }
+            })
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    this.message = "Email non disponible.";
+                }  
+            });               
+        }    
     }
 }
 </script>
