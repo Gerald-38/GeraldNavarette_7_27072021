@@ -3,16 +3,17 @@
         <div class="post-wrapper" v-if="!modify">
             <h2 class="post-title">{{this.post.title}}</h2>
             <div class="post-content" v-html="this.post.content"></div>            
-            <img :src="this.post.gifUrl" alt="" class="post-image" id="posted-image">            
+            <img :src="this.post.gifUrl" alt="image postée par l'utilisateur" class="post-image" id="posted-image">            
         </div>
 
         <div class="modify-wrapper" v-if="modify">
             <label for="modify-title">Modifier le titre :</label>
             <input type="text" id="modify-title" :value=this.post.title>            
             <label for="modify-content">Modifier le contenu :</label>            
-            <textarea id="modify-content" :value=this.post.content></textarea>  
+            <textarea id="modify-content" :value=this.post.content></textarea>
+            <label for="modify-image">Modifier l'image :</label>  
             <input type="file" name="image" id="modify-image">
-            <img :src="this.post.gifUrl" alt="" id="current-image">       
+            <img :src="this.post.gifUrl" alt="image postée par l'utilisateur" id="current-image">       
         </div>
         
 
@@ -101,7 +102,9 @@ export default {
                         }
                     }
                 )
-                .then(location.href = "/");
+                // .then(location.href = "/");
+                // .then(location.reload, location.href = "/");
+                .then(window.location.reload(), location.href = "/");
             } else {
                 let postData = {
                     title: title,
@@ -118,9 +121,11 @@ export default {
                     }
             
                 )
-                .then(location.href = "/");
+                // .then(location.href = "/");
+                // .then(location.reload, location.href = "/");
+                .then(window.location.reload(), location.href = "/");
             }            
-            location.href = "/";
+            // location.href = "/";
         }
     }
 }

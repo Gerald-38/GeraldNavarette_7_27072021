@@ -2,7 +2,7 @@
     <div class="header">
         <router-link style="text-decoration: none; color: inherit;" to='/'>
         <h1>
-            <img src="../assets/img/icon-left-font-monochrome-black.png" alt="Groupomania logo">
+            <img src="../assets/img/icon-left-font-monochrome-black.png" alt="logo Groupomania">
         </h1>
         </router-link>
 
@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+    *:focus{
+        border: 4px solid red;
+    }
 
     p link {
         text-decoration: none;

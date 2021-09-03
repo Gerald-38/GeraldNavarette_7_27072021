@@ -96,7 +96,8 @@ export default {
         font-size: .8rem;
     }
     .post-modify{
-        color: rgb(240, 84, 84);
+        /* color: rgb(240, 84, 84); */
+        color: rgb(34, 40, 49);
         font-size: 1rem;
         font-weight: bold;
     }

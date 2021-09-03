@@ -1,9 +1,8 @@
 <template>
     <div class="wrapper">
         <form @submit.prevent = signup()>
-            <img src="../assets/img/groupomania-logo.png" alt="Groupomania logo">
+            <img src="../assets/img/groupomania-logo.png" alt="logo Groupomania">
             <p>L'inscription est très simple et se fait en quelques clics !</p>
-            <!-- <nav><router-link to="/">Se connecter</router-link> | <router-link to="/signup" class="active">S'inscrire</router-link></nav> -->
 
             <label for="signup-email">Email :</label>
             <input id="signup-email" type="email" placeholder="Email" required>
@@ -18,10 +17,7 @@
             <input id="signup-password" type="password" placeholder="Mot de passe" required>
 
             <label for="signup-password-verification">Vérification du mot de passe :</label>
-            <input id="signup-password-verification" type="password" placeholder="Vérifier mot de passe" required>            
-
-            <!-- <label for="signup-pseudo">Pseudo :</label>
-            <input id="signup-pseudo" type="text" placeholder="Pseudo" required> -->
+            <input id="signup-password-verification" type="password" placeholder="Vérifier mot de passe" required>   
 
             <div class="error-message">{{message}}</div>
 
@@ -47,19 +43,17 @@ export default {
             const lastName = document.getElementById("signup-nom").value;            
             const password = document.getElementById("signup-password").value;
             const passwordVerif = document.getElementById("signup-password-verification").value;
-            const email = document.getElementById("signup-email").value;
-            // const pseudo = document.getElementById("signup-pseudo").value;
+            const email = document.getElementById("signup-email").value;            
             var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
             if( password != passwordVerif || !(password.match(passwordSchema))){                
-                this.message = "Vérifier le mot de passe : il doit contenir entre 6 et 20 caracteres, une lettre minuscule et un chiffre, et doit être identique dans les deux champs de saisie";
+                this.message = "Vérifier le mot de passe : il doit contenir entre 6 et 20 caracteres, une lettre majuscule et un chiffre, et doit être identique dans les deux champs de saisie";
             } else {
                 axios.post(`${this.$apiUrl}/user/signup`,
                     {
                         email,
                         firstName,                        
                         lastName,
-                        password,
-                        // pseudo
+                        password, 
                     },
                     {
                         headers: {

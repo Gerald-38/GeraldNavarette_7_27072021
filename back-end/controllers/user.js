@@ -141,7 +141,6 @@ exports.profile = (req, res, next) => {
     });
 };
 //  
-
 // MODIFY POUR MODIFIER DES ELEMENTS DU PROFIL
 exports.modify = (req, res, next) => {
     const userID = req.params.id;   
@@ -181,5 +180,3 @@ exports.modify = (req, res, next) => {
         .catch(e => res.status(500).json(e));
     }  
 }
-
-

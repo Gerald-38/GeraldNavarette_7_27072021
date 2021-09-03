@@ -3,40 +3,41 @@
   <div class="newPost">
     <div class="newPost-create-btn" @click="visible = true"  role="button" tabindex="0" aria-pressed="false" @keydown.enter="visible = true">Ajouter un nouveau post</div>
 
-    <transition name="fade">
+    <transition name="bounce">
       <div class="overlay" v-if="visible">
           <div class="form-wrapper">
             <span class="form-close"  @click="visible = false" role="button" tabindex="0" aria-pressed="false" @keydown.enter="visible = false">Annuler</span>
             <br>
             <form class="newPost-form" @submit.prevent="addPost()">
-              <input 
-                type="text" 
-                placeholder="entrez le titre" 
-                id="newpost-title" 
-                required>
-            <br>
-            <br>
-            <textarea
-              type = "text"
-              name="message"
-              class=""
-              cols="130"
-              rows="3"
-              maxlength="180"
-              required 
-              placeholder="entrez le contenu"
-              v-model="content"
-              id="newpost-content"
-            ></textarea>
-            <br>
-            <!-- Sélection du Gif -->
-            <div id='main'>
-              <input type="file" name="image" id="newpost-image" required> 
-            </div>
-            <br>                  
-
-          <button id="newPost-btn" type="submit" >Publier</button>          
-
+                <label for="newpost-title">Entrez un titre :</label>
+                <input 
+                    type="text" 
+                    placeholder="entrez le titre" 
+                    id="newpost-title" 
+                    required>
+                <br>
+                <br>
+                <label for="newpost-content">Entrez le texte du post :</label>
+                <textarea
+                    type = "text"
+                    name="message"
+                    class=""
+                    cols="130"
+                    rows="3"
+                    maxlength="180"
+                    required 
+                    placeholder="entrez le contenu"
+                    v-model="content"
+                    id="newpost-content"
+                ></textarea>
+                <br>
+                <!-- Sélection du Gif -->
+                <div id='main'>
+                <label for="newpost-image">Choisissez une image  :</label>
+                <input type="file" name="image" id="newpost-image" required> 
+                </div>
+                <br>
+                <button id="newPost-btn" type="submit" >Publier</button>
             </form>
           </div>
       </div>
@@ -137,7 +138,7 @@ export default {
         border-radius: 30px;
     }
     .form-close{
-        color: rgb(240, 84, 84);
+        color: rgb(34, 40, 49);
         cursor: pointer;
         align-self: flex-end;
     }
@@ -178,13 +179,21 @@ export default {
         transition-duration: 0.2s;
         cursor: pointer;
     }
-    .fade-enter-active, .fade-leave-active {
-    transition: opacity .8s;
+
+    .bounce-enter-active {
+        animation: bounce-in 0.5s;
     }
-    .fade-enter, .fade-leave-to {
-    opacity: 0;
+    .bounce-leave-active {
+        animation: bounce-in .2s reverse;
     }
-    /* Modify style */
+    @keyframes bounce-in {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
     .post-wrapper{
         display: flex;
         flex-direction: column;
