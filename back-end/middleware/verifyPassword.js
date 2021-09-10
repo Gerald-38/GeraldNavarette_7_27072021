@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         res.writeHead(400, '{"message":"Mot de passe requis : 6 caractères minimun. Au moins 1 Majuscule, 1chiffre, 1 minuscule. Sans espaces"}', {
             'content-type': 'application/json'
         });
-        res.end('Format de mot de passe incorrect');
+        res.end('Mot de passe requis : 6 caractères minimun. Au moins 1 Majuscule, 1chiffre, 1 minuscule. Sans espaces');
     } else {
         next();
     }

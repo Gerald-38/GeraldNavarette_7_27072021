@@ -5,7 +5,7 @@
             <p>L'inscription est très simple et se fait en quelques clics !</p>
 
             <label for="signup-email">Email :</label>
-            <input id="signup-email" type="email" placeholder="Email" required>
+            <input id="signup-email"  type="email" placeholder="Email" required>
             
             <label for="signup-prenom">Prenom :</label>
             <input id="signup-prenom" type="text" placeholder="Prenom" required>
@@ -44,9 +44,9 @@ export default {
             const password = document.getElementById("signup-password").value;
             const passwordVerif = document.getElementById("signup-password-verification").value;
             const email = document.getElementById("signup-email").value;            
-            var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
-            if( password != passwordVerif || !(password.match(passwordSchema))){                
-                this.message = "Vérifier le mot de passe : il doit contenir entre 6 et 20 caracteres, une lettre majuscule et un chiffre, et doit être identique dans les deux champs de saisie";
+            // var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+            if( password != passwordVerif ){                
+                this.message = "Vérifier le mot de passe : il doit être identique dans les deux champs de saisie";
             } else {
                 axios.post(`${this.$apiUrl}/user/signup`,
                     {
@@ -69,7 +69,7 @@ export default {
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
-                        this.message = "Email déjà utilisé.";
+                        this.message = error.response.data.message;
                     }  
                 });
             }         

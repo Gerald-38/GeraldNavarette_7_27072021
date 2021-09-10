@@ -132,6 +132,9 @@ export default {
 </script>
 
 <style scoped>
+    *:focus {
+        border: 4px solid rgb(240, 84, 84);
+    }
     /* Post style */
     .post-wrapper{
         margin: 50px auto 30px auto;

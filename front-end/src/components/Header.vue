@@ -33,8 +33,8 @@ export default {
 </script>
 
 <style scoped>
-    *:focus{
-        border: 4px solid red;
+    *:focus {
+        border: 4px solid rgb(240, 84, 84);
     }
 
     p link {

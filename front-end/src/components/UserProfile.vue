@@ -33,7 +33,6 @@
             <div class="error-message">{{message}}</div>
 
             <button class="new-btn" type="submit">Valider les modifications</button>
-            <br>  
             <button class="new-btn" type="submit" @click="modify = false" >Annuler les modifications</button>
           </form>
         </div>
@@ -236,6 +235,7 @@ export default {
         text-align: center;
     }
     .new-btn{
+        margin-bottom: 3px;
         padding: 10px;
         font-size: 1.1rem;
         color: white;

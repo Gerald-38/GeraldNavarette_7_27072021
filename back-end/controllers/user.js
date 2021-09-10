@@ -1,5 +1,6 @@
 const connect = require('../dbConnect').connection; //Connexion à la bd
 const bcrypt = require('bcrypt'); // Pour crypter le mot de passe
+var validator = require("email-validator"); // Validation de l'adresse mail
 const jwt = require("jsonwebtoken"); 
 const fs = require("fs"); 
 require('dotenv').config()
@@ -16,28 +17,37 @@ exports.signup = (req, res, next) => {
             });            
         } //Si email disponible
         else {
-            // Cryptage du MDP
-            bcrypt.hash(req.body.password, 10)
-            .then(hash => {
-                const email = req.body.email;
-                const firstName = req.body.firstName;
-                const lastName = req.body.lastName;            
-                const password = hash;
-                const pseudo = req.body.pseudo;
+            const email = req.body.email;
+            if (validator.validate(email)) {
+                // Cryptage du MDP
+                bcrypt.hash(req.body.password, 10)
+                .then(hash => {
+                    const email = req.body.email;
+                    const firstName = req.body.firstName;
+                    const lastName = req.body.lastName;            
+                    const password = hash;
+                    const pseudo = req.body.pseudo;
 
-                let sqlSignup;
-                let values;
+                    let sqlSignup;
+                    let values;
 
-                sqlSignup = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 'pseudo', 0, NULL, avatarUrl, NOW())";
-                values = [email, firstName, lastName, password, pseudo];
-                connect.query(sqlSignup, values, function (err, result) {
-                    if (err) {
-                        return res.status(500).json(err.message);
-                    }
-                    res.status(201).json({ message: "Utilisateur créé !" });
-                });
-            })
-            .catch(e => res.status(500).json(e));
+                    sqlSignup = "INSERT INTO user VALUES (NULL, ?, ?, ?, ?, 'pseudo', 0, NULL, avatarUrl, NOW())";
+                    values = [email, firstName, lastName, password, pseudo];
+                    connect.query(sqlSignup, values, function (err, result) {
+                        if (err) {
+                            return res.status(500).json(err.message);
+                        }
+                        res.status(201).json({ message: "Utilisateur créé !" });
+                    });
+                })
+                .catch(e => res.status(500).json(e));
+
+            }
+            else {
+                res.status(401).json({
+                    message: 'Email non valide. Veuillez saisir un mail au bon format'
+                });            
+            }
         }
     });
 };
