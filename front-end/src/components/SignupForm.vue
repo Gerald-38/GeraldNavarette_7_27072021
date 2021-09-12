@@ -43,8 +43,7 @@ export default {
             const lastName = document.getElementById("signup-nom").value;            
             const password = document.getElementById("signup-password").value;
             const passwordVerif = document.getElementById("signup-password-verification").value;
-            const email = document.getElementById("signup-email").value;            
-            // var passwordSchema = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+            const email = document.getElementById("signup-email").value;
             if( password != passwordVerif ){                
                 this.message = "Vérifier le mot de passe : il doit être identique dans les deux champs de saisie";
             } else {
@@ -69,7 +68,10 @@ export default {
                 })
                 .catch((error) => {
                     if (error.response.status === 401) {
-                        this.message = error.response.data.message;
+                        this.message = error.response.data.message;                                             
+                    }  
+                    if (error.response.status === 400) {
+                        this.message = error.response.data.message;                                             
                     }  
                 });
             }         
