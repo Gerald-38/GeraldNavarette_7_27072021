@@ -1,6 +1,6 @@
 const connect = require('../dbConnect').connection; //Connexion à la bd
 const bcrypt = require('bcrypt'); // Pour crypter le mot de passe
-var validator = require("email-validator"); // Validation de l'adresse mail
+const validator = require("email-validator"); // Validation de l'adresse mail
 const jwt = require("jsonwebtoken"); 
 const fs = require("fs"); 
 require('dotenv').config()

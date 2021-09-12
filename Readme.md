@@ -30,6 +30,8 @@ Implémenter un stockage de données sécurisé en utilisant SQL
 
 Cloner le projet
 
+Démarrer Wampserver
+
 Dans mySQLServer, importer le fichier SQL :
 ```
 /database/GroupomaniaDataBase.sql
